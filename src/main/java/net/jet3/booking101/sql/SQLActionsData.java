@@ -12,7 +12,7 @@ public class SQLActionsData
 
     private final String SELECT = "SELECT * FROM `actions` WHERE `title`=?";
     private final String SELECT_ID = "SELECT * FROM `actions` WHERE `id`=?";
-    private final String INSERT = "INSERT INTO `actions` (`id`, `title`, `type`, `dateToExecute`, `notify`, `description`) VALUES (?, ?, ?, ?, ?, ?)";
+    private final String INSERT = "INSERT INTO `actions` (`id`, `col`, `row`, `title`, `type`, `dateToExecute`, `notify`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private final String COUNT = "SELECT COUNT(*) AS rows FROM `actions`";
     private final String UPDATE = "UPDATE `actions` SET `%s`=? WHERE `id`=?";
     private final String DELETE = "DELETE FROM `actions` WHERE `id`=?";
@@ -130,15 +130,17 @@ public class SQLActionsData
         }
     }
 
-    public void create(int id, String title, String type, long dateToExecute, boolean notify, String desc) {
+    public void create(int id, int col, int row, String title, String type, long dateToExecute, boolean notify, String desc) {
         try (Connection connection = main.sql.getConnection()) {
             PreparedStatement ps = connection.prepareStatement(INSERT);
             ps.setInt(1, id);
-            ps.setString(2, title);
-            ps.setString(3, type);
-            ps.setLong(4, dateToExecute);
-            ps.setBoolean(5, notify);
-            ps.setString(6, desc);
+            ps.setInt(2, col);
+            ps.setInt(3, row);
+            ps.setString(4, title);
+            ps.setString(5, type);
+            ps.setLong(6, dateToExecute);
+            ps.setBoolean(7, notify);
+            ps.setString(8, desc);
             ps.execute();
         } catch (Exception ex) {
             ex.printStackTrace();

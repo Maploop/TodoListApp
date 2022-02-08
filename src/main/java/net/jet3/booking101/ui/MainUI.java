@@ -1,16 +1,20 @@
 package net.jet3.booking101.ui;
 
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.hotekey.KeyHandler;
+
+import java.awt.*;
 
 public class MainUI extends Application
 {
@@ -24,6 +28,8 @@ public class MainUI extends Application
     private MainMenuSidebar sidebar;
     private MainTasksPreview preview;
     private Label projectLabel;
+    
+    private ScrollBar scrollLeftRight;
 
     public static Stage publicStage;
     public static BorderPane publicRoot;
@@ -37,6 +43,22 @@ public class MainUI extends Application
         projectLabel.getStyleClass().add("project-label");
         projectLabel.setTranslateX(5);
         projectLabel.setTranslateY(50);
+        scrollLeftRight = new ScrollBar();
+        scrollLeftRight.setOrientation(Orientation.HORIZONTAL);
+        scrollLeftRight.setPrefHeight(20);
+        scrollLeftRight.setTranslateX(5);
+        scrollLeftRight.setTranslateY(70);
+        scrollLeftRight.setMin(0);
+        scrollLeftRight.setMax(100);
+        scrollLeftRight.setValue(0);
+        scrollLeftRight.setVisible(false);
+        scrollLeftRight.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+//                preview.scroll(scrollLeftRight.getValue());
+            } else {
+//                preview.scroll(scrollLeftRight.getValue());
+            }
+        });
     }
 
     @Override
@@ -52,6 +74,8 @@ public class MainUI extends Application
         root.getChildren().add(projectLabel);
         scene.getStylesheets().add("jfxstyle/main.css");
         sidebar.init(primaryStage, root, scene);
+
+        root.getChildren().add(scrollLeftRight);
 
         publicRoot = root;
         publicScene = scene;

@@ -12,6 +12,7 @@ import javafx.stage.FileChooser
 import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.initalization.ApplicationInitalizer
+import net.jet3.booking101.ui.dev.ApplicationConsole
 import net.jet3.booking101.ui.settings.SettingsUI
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.redo
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.undo
@@ -85,7 +86,9 @@ class MainMenuBar {
             developer = Menu("Developer")
             val appConsole = MenuItem("Application Console")
             developer!!.items.add(appConsole)
-            appConsole.onAction = EventHandler { e: ActionEvent? -> }
+            appConsole.setOnAction {
+                ManagementYaar.getInstance().console.isVisible = true
+            }
         }
     }
 

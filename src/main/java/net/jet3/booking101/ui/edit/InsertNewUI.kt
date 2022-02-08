@@ -97,7 +97,7 @@ class InsertNewUI(var column: Int, var row: Int) {
 
         confirmButton.setOnMouseClicked {
             var instance = ManagementYaar.getInstance();
-            instance.actionsData.create(instance.actionsData.count() + 1, titleField!!.text, typeCombo!!.value,
+            instance.actionsData.create(instance.actionsData.count() + 1, column, row, titleField!!.text, typeCombo!!.value,
             System.currentTimeMillis(), remindMe!!.isSelected, description!!.text)
             Log.info("Created new action for date " + System.currentTimeMillis());
         }

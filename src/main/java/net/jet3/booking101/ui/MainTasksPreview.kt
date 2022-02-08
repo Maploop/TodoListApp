@@ -21,8 +21,8 @@ class MainTasksPreview {
 
     var rows = 30
     var columns = 12
-    var width = 1200.0
-    var height = 650.0
+    var width = 1500.0
+    var height = 900.0
 
     var publicGrid: Grid? = null
 
@@ -45,8 +45,9 @@ class MainTasksPreview {
         val grid = Grid(columns, rows, width, height)
         publicGrid = grid
         val mg = MouseGestures()
-        grid.translateY = 100.0
-        grid.translateX = 30.0
+        grid.translateY = 70.0
+        grid.translateX = 20.0
+
         for (row in 0 until rows) {
             for (column in 0 until columns) {
                 val cell = Cell(column, row)

@@ -1,10 +1,12 @@
 package net.jet3.booking101;
 
 import javafx.application.Application;
+import net.jet3.booking101.component.Console;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.sql.SQLActionsData;
 import net.jet3.booking101.sql.SQLDatabase;
 import net.jet3.booking101.ui.MainUI;
+import net.jet3.booking101.ui.dev.ApplicationConsole;
 import net.jet3.booking101.util.Log;
 import net.jet3.booking101.util.Util;
 
@@ -24,6 +26,7 @@ public class ManagementYaar
 
     public SQLDatabase sql;
     public SQLActionsData actionsData;
+    public ApplicationConsole console;
 
     public static String LAST_EDITED_PROJECT = "";
     public static int WIDTH;
@@ -39,6 +42,7 @@ public class ManagementYaar
         Log.info("Loading SQL database...");
         sql = new SQLDatabase();
         actionsData = new SQLActionsData();
+        console = new ApplicationConsole();
 
         Date date = new Date();
         today = Util.prettify(String.valueOf(date.getDay())) + " of " + Util.getMonth(date.getMonth()) + " " + date.getYear();
