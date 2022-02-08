@@ -1,28 +1,29 @@
 package net.jet3.booking101.ui
 
-import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.control.Label
 import javafx.scene.control.TextInputDialog
 import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.HBox
-import javafx.scene.layout.VBox
+import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
-import net.jet3.booking101.Main
+import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.util.Util
 
 class MainMenuSidebar {
     var option1: Button? = Button("Rename")
-    var box: HBox? = HBox()
     var editorRoot: AnchorPane? = AnchorPane()
+    var projectLabel: Label = Label();
 
     fun beforeInit() {
-        option1?.getStyleClass()?.add("sidebar-btn")
-        option1?.setMaxWidth(200.0)
-        option1?.setMinWidth(200.0)
-        option1?.setMaxHeight(50.0)
-        option1?.setMinHeight(50.0)
+        projectLabel = Label("Workspace: " + ManagementYaar.LAST_EDITED_PROJECT)
+        projectLabel.styleClass.add("label-project")
+        option1?.styleClass?.add("sidebar-btn")
+        option1?.maxWidth = 200.0
+        option1?.minWidth = 200.0
+        option1?.maxHeight = 50.0
+        option1?.minHeight = 50.0
 
         option1?.translateX = 10.0;
         option1?.translateY = 50.0;
@@ -34,23 +35,17 @@ class MainMenuSidebar {
             input.setContentText("New name:")
             val result = input.showAndWait()
             Util.set(ApplicationInitalizer.configFile, "lastProject", result.get())
-            Main.LAST_EDITED_PROJECT = result.get()
+            ManagementYaar.LAST_EDITED_PROJECT = result.get()
         }
     }
 
-    fun init(stage: Stage, root: VBox, scene: Scene) {
+    fun init(stage: Stage, root: BorderPane, scene: Scene) {
         beforeInit()
         scene.stylesheets.add("/jfxstyle/sidebar.css")
 
-        box!!.alignment = Pos.BOTTOM_LEFT
-
-        box!!.children.add(option1)
-        editorRoot!!.children.add(box)
-        AnchorPane.setTopAnchor(box, 0.0)
-        AnchorPane.setLeftAnchor(box, 0.0)
-        AnchorPane.setRightAnchor(box, 0.0)
-        AnchorPane.setBottomAnchor(box, 0.0)
-        root.children.add(editorRoot)
+        editorRoot!!.children.add(option1)
+        editorRoot!!.children.add(projectLabel)
+        root.left = editorRoot;
 
         stage.scene = scene
     }

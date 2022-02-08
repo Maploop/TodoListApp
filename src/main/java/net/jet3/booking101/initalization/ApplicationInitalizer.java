@@ -1,15 +1,9 @@
 package net.jet3.booking101.initalization;
 
-import net.jet3.booking101.Main;
-import net.jet3.booking101.util.Log;
+import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.util.Util;
-import org.json.simple.JSONObject;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 public class ApplicationInitalizer
 {
@@ -21,7 +15,7 @@ public class ApplicationInitalizer
     public static File tempFile;
 
     public static void init() {
-        installPath = new File(Util.getAppdata().getAbsolutePath());
+        installPath = new File(Util.getAppHome().getAbsolutePath());
         configFile = new File(installPath, "config");
         dataFile = new File(installPath, "data");
         logFile = new File(installPath, "log");
@@ -49,9 +43,10 @@ public class ApplicationInitalizer
                 return;
             }
         }
-        Main.LAST_EDITED_PROJECT = Util.getString(configFile, "lastProject");
-        Main.WIDTH = Util.getInt(configFile, "width");
-        Main.HEIGHT = Util.getInt(configFile, "height");
-        Main.MAXIMIZED = Util.getBoolean(configFile, "maximized");
+        ManagementYaar.LAST_EDITED_PROJECT = Util.getString(configFile, "lastProject");
+        ManagementYaar.WIDTH = Util.getInt(configFile, "width");
+        ManagementYaar.HEIGHT = Util.getInt(configFile, "height");
+        ManagementYaar.MAXIMIZED = Util.getBoolean(configFile, "maximized");
+        ManagementYaar.DEVELOPER_MODE = Util.getBoolean(configFile, "developerMode");
     }
 }

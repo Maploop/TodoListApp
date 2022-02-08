@@ -1,6 +1,6 @@
 package net.jet3.booking101.util;
 
-import net.jet3.booking101.Main;
+import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.timeHandler.DateAndTime;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -9,7 +9,7 @@ import java.io.*;
 
 public class Util
 {
-    public static File getAppdata() {
+    public static File getAppHome() {
         File appdata = new File(System.getProperty("user.home") + "/Appdata/Roaming/Jet3/Management Yaar");
         if (!appdata.exists()) {
             appdata.mkdirs();
@@ -60,7 +60,7 @@ public class Util
         InputStream stream = null;
         OutputStream resStreamOut = null;
         try {
-            stream = Main.class.getResourceAsStream(resource);
+            stream = ManagementYaar.class.getResourceAsStream(resource);
             if(stream == null) {
                 throw new IllegalStateException("Failed to get " + resource + "!");
             }
@@ -74,8 +74,10 @@ public class Util
         } catch (Exception ex) {
             throw ex;
         } finally {
-            stream.close();
-            resStreamOut.close();
+            try {
+                stream.close();
+                resStreamOut.close();
+            } catch (Exception ignored) { }
         }
 
         return file.toString();

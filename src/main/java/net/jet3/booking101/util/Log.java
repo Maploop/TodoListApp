@@ -2,24 +2,24 @@ package net.jet3.booking101.util;
 
 import java.util.logging.Logger;
 
-public class Log extends Logger
+public class Log
 {
-    protected Log() {
-        super("net.jet3.booking101", "Booking101");
-    }
 
     private static void log(String lvl, Object msg) {
         switch (lvl.toLowerCase()) {
             case "info":
-                Log.getLogger("net.jet3.booking101").info(msg.toString());
+                System.out.println("[INFO] " + msg);
+                break;
             case "warning":
-                Log.getLogger("net.jet3.booking101").warning(msg.toString());
+                System.out.println("[WARNING] " + msg);
+                break;
             case "severe":
-                Log.getLogger("net.jet3.booking101").severe(msg.toString());
+                System.err.println("[SEVERE] " + msg);
+                break;
         }
     }
 
-    public static void INFO(Object msg) {
+    public static void info(Object msg) {
         log("info", msg);
     }
 

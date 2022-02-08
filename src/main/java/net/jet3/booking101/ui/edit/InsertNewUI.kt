@@ -6,7 +6,9 @@ import javafx.scene.control.*
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
+import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.ui.MainTasksPreview
+import net.jet3.booking101.util.Log
 
 class InsertNewUI(var column: Int, var row: Int) {
     var titleField: TextField? = null
@@ -24,6 +26,8 @@ class InsertNewUI(var column: Int, var row: Int) {
 
     var confirmButton:Button = Button("Create")
     var cancelButton:Button = Button("Cancel")
+
+    private var stage: Stage?= null;
 
     fun InsertNewUI() {
         titleField = TextField()
@@ -65,7 +69,7 @@ class InsertNewUI(var column: Int, var row: Int) {
         day?.translateX = 170.0
         hour?.translateX = 220.0
 
-        confirmButton.translateX = 70.0
+        confirmButton.translateX = 280.0
         confirmButton.translateY = 300.0
         confirmButton.maxWidth = 100.0
         confirmButton.minWidth = 100.0
@@ -73,7 +77,7 @@ class InsertNewUI(var column: Int, var row: Int) {
         confirmButton.minHeight = 30.0
         confirmButton.styleClass.add("buttons")
 
-        cancelButton.translateX = 300.0
+        cancelButton.translateX = 400.0
         cancelButton.translateY = 300.0
         cancelButton.maxWidth = 100.0
         cancelButton.minWidth = 100.0
@@ -92,7 +96,14 @@ class InsertNewUI(var column: Int, var row: Int) {
         remindMeLabel = Label("Remind me")
 
         confirmButton.setOnMouseClicked {
-            MainTasksPreview.publicGrid.
+            var instance = ManagementYaar.getInstance();
+            instance.actionsData.create(instance.actionsData.count() + 1, titleField!!.text, typeCombo!!.value,
+            System.currentTimeMillis(), remindMe!!.isSelected, description!!.text)
+            Log.info("Created new action for date " + System.currentTimeMillis());
+        }
+
+        cancelButton.setOnMouseClicked {
+            stage?.close()
         }
     }
 
@@ -109,6 +120,7 @@ class InsertNewUI(var column: Int, var row: Int) {
         primaryStage.isResizable = false
         primaryStage.isAlwaysOnTop = true
 
+        this.stage = primaryStage
         primaryStage.show()
     }
 }

@@ -14,3 +14,8 @@
 .sidebar-btn:active {
     -fx-background-color: #d4fce9;
 }
+.label-project {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0076a3;
+}

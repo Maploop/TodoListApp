@@ -19,7 +19,8 @@
     "open": "Open",
     "save": "Save",
     "saveAs": "Save as",
-    "exit": "Exit"
+    "exit": "Exit",
+    "settings": "Settings"
   },
   "edit": {
     "cut": "Cut",
