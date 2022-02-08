@@ -1,0 +1,43 @@
+{
+  "insertNew": "Insert new",
+  "deleteCurrent": "Delete current",
+  "exitConfirmHeader": "Are you sure you want to exit?",
+  "rename": "Rename",
+  "january": "January",
+  "february": "February",
+  "march": "March",
+  "april": "April",
+  "may": "May",
+  "june": "June",
+  "july": "July",
+  "august": "August",
+  "september": "September",
+  "october": "October",
+  "november": "November",
+  "december": "December",
+  "file": {
+    "open": "Open",
+    "save": "Save",
+    "saveAs": "Save as",
+    "exit": "Exit"
+  },
+  "edit": {
+    "cut": "Cut",
+    "copy": "Copy",
+    "paste": "Paste",
+    "undo": "Undo",
+    "redo": "Redo"
+  },
+  "view": {
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "resetZoom": "Reset zoom"
+  },
+  "help": {
+    "help": "Help",
+    "about": "About",
+    "aboutText": "Management Yaar is an application made by the Jet3\n development team in order to make managing\n your days easier and less painful!\n\nThis is a free open-source software.\n\nCopyright LLC Jet3 Development Team",
+    "aboutTitle": "About",
+    "helpTitle": "Help"
+  }
+}

@@ -1,0 +1,8 @@
+.buttons {
+    -fx-background-color: lavender;
+    -fx-text-fill: black;
+}
+.buttons:hover {
+    -fx-background-color: lightblue;
+    -fx-cursor: hand;
+}

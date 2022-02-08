@@ -1,0 +1,16 @@
+.sidebar-btn {
+    -fx-background-color: #d1c6f7;
+    -fx-text-fill: darkgreen;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-spacing: 8;
+    -fx-border: none;
+}
+.sidebar-btn:hover {
+    -fx-background-color: #a69dc4;
+    -fx-cursor: hand;
+}
+.sidebar-btn:active {
+    -fx-background-color: #d4fce9;
+}

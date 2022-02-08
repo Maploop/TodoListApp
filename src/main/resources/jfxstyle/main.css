@@ -1,0 +1,6 @@
+.project-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0076a3;
+}
+-fx-background-color: lightgray;
