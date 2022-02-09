@@ -7,17 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import net.jet3.booking101.component.Console;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
-import net.jet3.booking101.sql.SQLActionsData;
-import net.jet3.booking101.sql.SQLDatabase;
+import net.jet3.booking101.object.Property;
 import net.jet3.booking101.ui.MainUI;
 import net.jet3.booking101.ui.dev.ApplicationConsole;
 import net.jet3.booking101.util.Log;
 import net.jet3.booking101.util.Util;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -33,8 +29,6 @@ public class ManagementYaar
     public static String today = "";
     public static String todayComputer = "";
 
-    public SQLDatabase sql;
-    public SQLActionsData actionsData;
     public ApplicationConsole console;
 
     public static String LAST_EDITED_PROJECT = "";
@@ -48,10 +42,9 @@ public class ManagementYaar
 
         ApplicationInitalizer.init();
 
-        Log.info("Loading SQL database...");
-        sql = new SQLDatabase();
-        actionsData = new SQLActionsData();
+        Log.info("Loading local data...");
         console = new ApplicationConsole();
+        Property.getAllActions();
 
         Date date = new Date();
         today = Util.prettify(String.valueOf(date.getDay())) + " of " + Util.getMonth(date.getMonth()) + " " + date.getYear();
