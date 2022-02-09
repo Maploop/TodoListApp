@@ -24,7 +24,7 @@ public class SQLDatabase
             try {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
-                Util.exportResource("files/data.db", file);
+                Util.exportResource("/files/data.db", file);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
