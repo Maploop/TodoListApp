@@ -4,6 +4,8 @@ import javafx.event.EventHandler
 import javafx.scene.Cursor
 import javafx.scene.Node
 import javafx.scene.Scene
+import javafx.scene.control.Alert
+import javafx.scene.control.ButtonType
 import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
 import javafx.scene.input.MouseButton
@@ -12,9 +14,12 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
 import javafx.scene.layout.StackPane
 import javafx.stage.Stage
+import net.jet3.booking101.`object`.Property
+import net.jet3.booking101.data.DataHandler
 import net.jet3.booking101.ui.edit.InsertNewUI
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.push
 import net.jet3.booking101.undoHandler.Undoable
+import net.jet3.booking101.util.Log
 
 class MainTasksPreview {
     private var root: StackPane? = null
@@ -51,6 +56,8 @@ class MainTasksPreview {
         for (row in 0 until rows) {
             for (column in 0 until columns) {
                 val cell = Cell(column, row)
+                if (hasAction(cell))
+                    cell.styleClass.add("hasProperty")
                 mg.makePaintable(cell)
                 grid.add(cell, column, row)
             }
@@ -58,6 +65,10 @@ class MainTasksPreview {
         root.center = grid
         scene.stylesheets.add("jfxstyle/grid.css")
         stage.scene = scene
+    }
+
+    fun hasAction(cell: Cell): Boolean {
+        return DataHandler.COLUMNS.contains(cell.column) && DataHandler.ROWS.contains(cell.row)
     }
 
     class Grid(var columns: Int, var rows: Int, var w: Double, var h: Double) : Pane() {
@@ -154,6 +165,23 @@ class MainTasksPreview {
                         val insertNewUI = InsertNewUI((node as Cell).column, node.row)
                         insertNewUI.start()
                     }
+
+                    deleteCurrent?.setOnAction {
+                        val alert = Alert(Alert.AlertType.CONFIRMATION)
+                        alert.buttonTypes[0] = ButtonType.YES
+                        alert.buttonTypes[1] = ButtonType.NO
+                        alert.title = "Are you sure?"
+                        alert.headerText = "Are you sure you want to delete this property?"
+
+                        alert.showAndWait()
+                        if (alert.result == ButtonType.YES) {
+                            Log.info("Deleting...")
+                            val property = DataHandler.get((node as Cell).column, node.row)
+                            Log.info(property.delete())
+                            // done
+                        }
+                    }
+
                     contextMenu?.show(node, e.screenX, e.screenY)
                 }
             }

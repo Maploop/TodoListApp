@@ -13,6 +13,7 @@ import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.dev.ApplicationConsole
+import net.jet3.booking101.ui.dev.ConsoleUI
 import net.jet3.booking101.ui.settings.SettingsUI
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.redo
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.undo
@@ -69,17 +70,15 @@ class MainMenuBar {
         help = Menu("Help")
         val About = MenuItem((Util.get(ApplicationInitalizer.lang, "help") as JSONObject)["about"].toString())
         About.onAction = EventHandler { e: ActionEvent? ->
-            val alert =
-                Alert(Alert.AlertType.INFORMATION)
-            alert.title = (Util.get(
-                ApplicationInitalizer.lang,
-                "help"
-            ) as JSONObject)["aboutTitle"].toString()
-            alert.headerText = (Util.get(
-                ApplicationInitalizer.lang,
-                "help"
-            ) as JSONObject)["aboutText"].toString()
-            alert.showAndWait()
+            ManagementYaar.pop(Alert.AlertType.INFORMATION,
+                (Util.get(
+                    ApplicationInitalizer.lang,
+                    "help"
+                ) as JSONObject)["aboutTitle"].toString()
+                        , (Util.get(
+                    ApplicationInitalizer.lang,
+                    "help"
+                ) as JSONObject)["aboutText"].toString())
         }
         help!!.items.add(About)
         if (ManagementYaar.DEVELOPER_MODE) {
@@ -87,7 +86,7 @@ class MainMenuBar {
             val appConsole = MenuItem("Application Console")
             developer!!.items.add(appConsole)
             appConsole.setOnAction {
-                ManagementYaar.getInstance().console.isVisible = true
+                ConsoleUI().start()
             }
         }
     }

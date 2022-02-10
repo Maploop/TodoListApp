@@ -3,12 +3,10 @@ package net.jet3.booking101.ui.edit
 import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.control.*
-import javafx.scene.layout.HBox
-import javafx.scene.layout.VBox
 import javafx.stage.Stage
-import net.jet3.booking101.ManagementYaar
-import net.jet3.booking101.ui.MainTasksPreview
-import net.jet3.booking101.util.Log
+import net.jet3.booking101.`object`.Property
+import net.jet3.booking101.`object`.PropertyType
+import java.util.*
 
 class InsertNewUI(var column: Int, var row: Int) {
     var titleField: TextField? = null
@@ -96,10 +94,15 @@ class InsertNewUI(var column: Int, var row: Int) {
         remindMeLabel = Label("Remind me")
 
         confirmButton.setOnMouseClicked {
-            var instance = ManagementYaar.getInstance();
-            instance.actionsData.create(instance.actionsData.count() + 1, column, row, titleField!!.text, typeCombo!!.value,
-            System.currentTimeMillis(), remindMe!!.isSelected, description!!.text)
-            Log.info("Created new action for date " + System.currentTimeMillis());
+            val action = Property.getProperty(UUID.randomUUID());
+            action.title = titleField?.text
+            action.type = typeCombo?.value?.let { it1 -> PropertyType.valueOf(it1.uppercase()) }
+            action.description = description?.text
+            action.notify = remindMe!!.isSelected
+            action.dateToExecute = GregorianCalendar(year?.text!!.toInt(), month?.text!!.toInt(), day?.text!!.toInt(), hour?.text!!.toInt(), 0).timeInMillis
+            action.save()
+
+            stage?.close()
         }
 
         cancelButton.setOnMouseClicked {
