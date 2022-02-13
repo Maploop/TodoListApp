@@ -14,6 +14,7 @@ import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.dev.ApplicationConsole
 import net.jet3.booking101.ui.dev.ConsoleUI
+import net.jet3.booking101.ui.edit.InsertNewUI
 import net.jet3.booking101.ui.settings.SettingsUI
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.redo
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.undo
@@ -29,6 +30,11 @@ class MainMenuBar {
 
     fun MainMenuBar() {
         file = Menu("File")
+        val New = MenuItem("New")
+        New.setOnAction {
+            InsertNewUI(1, 1).start();
+        }
+        file!!.items.add(New);
         val Open = MenuItem((Util.get(ApplicationInitalizer.lang, "file") as JSONObject)["open"].toString())
         Open.addEventHandler(ActionEvent.ACTION) { e: ActionEvent? ->
             val chooser = FileChooser()

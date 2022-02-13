@@ -14,6 +14,8 @@ import net.jet3.booking101.ui.dev.ApplicationConsole;
 import net.jet3.booking101.util.Log;
 import net.jet3.booking101.util.Util;
 
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;

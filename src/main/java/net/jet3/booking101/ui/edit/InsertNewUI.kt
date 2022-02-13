@@ -6,6 +6,7 @@ import javafx.scene.control.*
 import javafx.stage.Stage
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.`object`.PropertyType
+import net.jet3.booking101.ui.MainUI
 import java.util.*
 
 class InsertNewUI(var column: Int, var row: Int) {
@@ -103,6 +104,7 @@ class InsertNewUI(var column: Int, var row: Int) {
             action.save()
 
             stage?.close()
+            MainUI().update()
         }
 
         cancelButton.setOnMouseClicked {
@@ -114,6 +116,7 @@ class InsertNewUI(var column: Int, var row: Int) {
         InsertNewUI()
 
         val primaryStage = Stage()
+        primaryStage.initOwner(MainUI.publicScene.window)
 
         primaryStage.title = "Insert New"
 

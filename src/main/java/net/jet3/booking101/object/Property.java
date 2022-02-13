@@ -32,6 +32,9 @@ public class Property
     @Getter
     @Setter
     public boolean notify;
+    @Getter
+    @Setter
+    public boolean done;
 
     private DataHandler handler;
 
@@ -45,6 +48,7 @@ public class Property
         this.dateToExecute = System.currentTimeMillis();
         this.notify = false;
         this.handler = new DataHandler(id.toString());
+        this.done = false;
 
         boolean save = false;
         if (!handler.exists()) {
@@ -67,6 +71,7 @@ public class Property
         handler.set("description", description);
         handler.set("dateToExecute", dateToExecute);
         handler.set("notify", notify);
+        handler.set("done", done);
 
         handler.save();
     }

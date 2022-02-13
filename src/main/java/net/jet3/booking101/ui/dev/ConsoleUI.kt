@@ -29,6 +29,19 @@ class ConsoleUI {
         field.translateX = 185.0
         execute.translateX = 555.0
         field.setPrefSize(360.0, 20.0)
+
+        execute.setOnAction {
+            // execute cmd
+        }
+
+        clear.setOnAction {
+            output.text = ""
+        }
+
+        copy.setOnAction {
+            output.text = console.text
+        }
+
     }
 
     fun start() {

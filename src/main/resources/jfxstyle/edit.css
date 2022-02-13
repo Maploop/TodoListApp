@@ -1,0 +1,25 @@
+.editor-root {
+
+}
+.text-field {
+    -fx-border-color: lavender;
+}
+.button {
+    -fx-background-color: #d1c6f7;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-spacing: 8;
+    -fx-border: none;
+}
+.button:active {
+    -fx-background-color: #d4fce9;
+}
+.button:hover {
+    -fx-background-color: #a69dc4;
+    -fx-cursor: hand;
+}
+.label {
+        -fx-font-size: 16px;
+}

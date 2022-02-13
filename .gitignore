@@ -1,2 +1,11 @@
 # Project exclude paths
 /target/
+/.idea/vcs.xml
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea/runConfigurations.xml
+/.idea/dictionaries
+/.idea/caches
+/.idea/misc.xml
+/.idea/scratches
+/.idea/modules.xml

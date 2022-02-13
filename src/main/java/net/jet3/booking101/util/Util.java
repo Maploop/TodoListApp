@@ -102,4 +102,9 @@ public class Util
         }
         return null;
     }
+
+    public static void runAsync(Runnable run) {
+        Thread thread = new Thread(run);
+        thread.start();
+    }
 }

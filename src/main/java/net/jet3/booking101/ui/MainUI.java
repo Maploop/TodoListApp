@@ -52,13 +52,6 @@ public class MainUI extends Application
         scrollLeftRight.setMax(100);
         scrollLeftRight.setValue(0);
         scrollLeftRight.setVisible(false);
-        scrollLeftRight.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-//                preview.scroll(scrollLeftRight.getValue());
-            } else {
-//                preview.scroll(scrollLeftRight.getValue());
-            }
-        });
     }
 
     @Override
@@ -98,10 +91,19 @@ public class MainUI extends Application
             }
         });
 
-        primaryStage.setMaximized(ManagementYaar.MAXIMIZED);
+        primaryStage.setMaximized(true);
 
         scene.setOnKeyReleased(e -> new KeyHandler().handleKeyRelease(e));
         scene.setOnKeyPressed(e -> new KeyHandler().handleKeyPress(e));
         primaryStage.show();
+    }
+
+    public void update() {
+        publicRoot.getChildren().clear();
+
+        preview.init(publicStage, publicRoot, publicScene);
+        bar.init(publicStage, publicRoot, publicScene);
+        sidebar.init(publicStage, publicRoot, publicScene);
+        publicStage.show();
     }
 }

@@ -1,0 +1,11 @@
+.undone {
+    -fx-background-color: #89b2f5;
+}
+.done {
+    -fx-background-color: #70ffa7;
+}
+.title {
+    -fx-text-fill: #363636;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
