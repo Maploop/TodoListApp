@@ -13,6 +13,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.hotekey.KeyHandler;
+import net.jet3.booking101.util.FXDialogs;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.CommandLinksDialog;
 
 public class MainUI extends Application
 {
@@ -74,19 +77,12 @@ public class MainUI extends Application
 
         primaryStage.setOnCloseRequest(e -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirm Exit");
-            alert.setHeaderText("Are you sure you want to exit?");
-            alert.showAndWait();
 
-            if (alert.getResult() == ButtonType.OK) {
-                ManagementYaar.WIDTH = (int) primaryStage.getWidth();
-                ManagementYaar.HEIGHT = (int) primaryStage.getHeight();
-                ManagementYaar.MAXIMIZED = primaryStage.isMaximized();
-
+            String response = FXDialogs.showConfirm("Are you sure you want to exit?", "", "Exit", "Cancel");
+            if (response.equals("Exit"))
                 ManagementYaar.exit();
-            } else {
+            else
                 e.consume();
-            }
         });
 
         primaryStage.setMaximized(true);
