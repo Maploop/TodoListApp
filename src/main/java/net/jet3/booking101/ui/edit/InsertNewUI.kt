@@ -4,6 +4,7 @@ import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.stage.Stage
+import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.`object`.PropertyType
 import net.jet3.booking101.ui.MainUI
@@ -105,6 +106,7 @@ class InsertNewUI(var column: Int, var row: Int) {
 
             stage?.close()
             MainUI().update()
+            Toast.success("New property '" + action.title + "' created!")
         }
 
         cancelButton.setOnMouseClicked {
@@ -124,7 +126,6 @@ class InsertNewUI(var column: Int, var row: Int) {
         primaryStage.scene = Scene(root, 500.0, 350.0)
         primaryStage.scene.stylesheets.add("jfxstyle/insert.css")
         primaryStage.isResizable = false
-        primaryStage.isAlwaysOnTop = true
 
         this.stage = primaryStage
         primaryStage.show()

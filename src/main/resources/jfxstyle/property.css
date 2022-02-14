@@ -1,8 +1,43 @@
 .undone {
-    -fx-background-color: #89b2f5;
+    -fx-background-color: white;
 }
 .done {
     -fx-background-color: #70ffa7;
+}
+.marked-done {
+    -fx-background-color: #4fb375;
+}
+.marked-undone {
+    -fx-background-color: #6584b5;
+}
+.parent {
+    -fx-border-color: #baa3ff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+.parent:hover {
+    -fx-text-fill: white;
+    -fx-background-color: #b5b5b5;
+}
+.column {
+    -fx-background-color: #baa3ff;
+    -fx-border-color: darkgray;
+    -fx-border-width: 2px;
+}
+.no-properties {
+    -fx-text-fill: #bababa;
+    -fx-font-size: 16px;
+}
+.create-btn {
+    -fx-background-color: #baa3ff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+.create-btn:hover {
+    -fx-background-color: #8c7abf;
+    -fx-cursor: hand;
 }
 .title {
     -fx-text-fill: #363636;

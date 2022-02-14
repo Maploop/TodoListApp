@@ -6,6 +6,8 @@ import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
 import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
+import net.jet3.booking101.Toast
+import net.jet3.booking101.ui.MainUI
 
 class SettingsUI {
     var devMode = CheckBox()
@@ -32,6 +34,7 @@ class SettingsUI {
 
         save.setOnMouseClicked {
             ManagementYaar.DEVELOPER_MODE = devMode.isSelected
+            Toast.success("Please restart the application for the changes to fully apply.")
             stage?.close()
         }
         cancel.setOnMouseClicked {
@@ -43,6 +46,7 @@ class SettingsUI {
         SettingsUI()
 
         val primaryStage = Stage()
+        primaryStage.initOwner(MainUI.publicScene.window)
 
         primaryStage.title = "Settings"
 
@@ -50,7 +54,6 @@ class SettingsUI {
         primaryStage.scene = Scene(root, 500.0, 350.0)
         primaryStage.scene.stylesheets.add("jfxstyle/settings.css")
         primaryStage.isResizable = false
-        primaryStage.isAlwaysOnTop = true
 
         this.stage = primaryStage
 

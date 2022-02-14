@@ -8,21 +8,21 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
-import net.jet3.booking101.object.Property;
 import net.jet3.booking101.ui.MainUI;
 import net.jet3.booking101.ui.dev.ApplicationConsole;
-import net.jet3.booking101.util.Log;
 import net.jet3.booking101.util.Util;
+import net.jet3.booking101.object.Property;
+import net.jet3.booking101.util.Log;
 
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
- * Copyright (c) Jet3. All rights reserved.
- * Owned by Soroush Behzadi, Mohammad Hosein Nemati.
+ * Copyright (c) SpecTY. All rights reserved.
+ * Owned by Soroush Behzadi
  */
 public class ManagementYaar
 {
@@ -39,6 +39,8 @@ public class ManagementYaar
     public static boolean MAXIMIZED;
     public static boolean DEVELOPER_MODE;
 
+    public static List<Property> selectedProperties = new ArrayList<>();
+
     public ManagementYaar(String... args) {
         instance = this;
 
@@ -46,7 +48,7 @@ public class ManagementYaar
 
         Log.info("Loading local data...");
         console = new ApplicationConsole();
-        Property.getAllActions();
+        Property.cache();
 
         Date date = new Date();
         today = Util.prettify(String.valueOf(date.getDay())) + " of " + Util.getMonth(date.getMonth()) + " " + date.getYear();

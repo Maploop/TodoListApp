@@ -1,5 +1,7 @@
 package net.jet3.booking101.ui
 
+import javafx.application.Application
+import javafx.scene.Cursor
 import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.control.*
@@ -7,11 +9,19 @@ import javafx.scene.input.MouseButton
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
 import javafx.stage.Stage
-import net.jet3.booking101.ToastController
+import net.jet3.booking101.ManagementYaar
+import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Property
+import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.edit.EditUI
+import net.jet3.booking101.ui.edit.InsertNewUI
+import net.jet3.booking101.util.IDraggable
 import net.jet3.booking101.util.Log
 import net.jet3.booking101.util.Util
+import org.controlsfx.control.Notifications
+import java.util.*
+import kotlin.time.Duration
+import java.util.TimerTask as TimerTask1
 
 class MainTasksPreview {
     private var root: StackPane? = null
@@ -36,87 +46,157 @@ class MainTasksPreview {
     }
 
     fun init(stage: Stage, root: BorderPane, scene: Scene) {
-        var x = 0.0;
+        val rect = javafx.scene.shape.Rectangle(10.0, 10.0, 10.0, 10.0)
+        rect.styleClass.add("rect")
+        val x = 0.0;
         var y = 0.0;
         Log.info(Property.getAllActions());
 
+        val scroll = ScrollPane(rect)
+        scroll.stylesheets.add("/jfxstyle/property.css")
+        scroll.styleClass.add("column")
+        scroll.prefWidth = 500.0
+        scroll.maxWidth = 500.0
+        scroll.maxHeight = height
+        scroll.prefHeight = height
+        scroll.translateX = 0.0
+
+        val finished = ScrollPane(rect)
+        finished.stylesheets.add("/jfxstyle/property.css")
+        finished.styleClass.add("column")
+        finished.prefWidth = 500.0
+        finished.maxWidth = 500.0
+        finished.maxHeight = height
+        finished.prefHeight = height
+        finished.minHeight = height
+        finished.translateX = 550.0
+
+
         val group = Group()
-        group.translateX = 0.0 /*-700.0*/
-        group.translateY = -370.0
+        group.translateX = 25.0 /*-700.0*/
+        group.translateY = 25.0 /*-370.0*/
 
-        for (property in Property.getAllActions()) {
-            val obj = BorderPane()
+        val finishedGroup = Group()
+        finishedGroup.translateX = 25.0
+        finishedGroup.translateY = 25.0
 
-            obj.stylesheets.add("/jfxstyle/property.css");
-            obj.setOnMouseClicked {
-                if (it.button != MouseButton.SECONDARY)
-                    return@setOnMouseClicked
+        if (!Property.getAllActions().isEmpty()) {
+            for (property in Property.getAllActions()) {
+                val obj = BorderPane()
 
-                if (property.done)
-                    view?.text = "Mark as unfinished"
-                else
-                    view?.text = "Mark as finished"
+                obj.stylesheets.add("/jfxstyle/property.css");
 
-                view?.setOnAction {
-                    property.done = !property.done
-                    Util.runAsync {
-                        property.save()
+                obj.setOnMouseClicked {
+                    if (it.button == MouseButton.PRIMARY) {
+                        if (it.clickCount == 2) {
+                            EditUI(property).start()
+                            return@setOnMouseClicked
+                        }
+                        if (obj.styleClass.contains("marked-undone") || obj.styleClass.contains("marked-done")) {
+                            obj.styleClass.removeIf { it1 ->
+                                it1.contains("marked")
+                            }
+                            ManagementYaar.selectedProperties.remove(property)
+                        } else {
+                            ManagementYaar.selectedProperties.add(property)
+                            if (property.done)
+                                obj.styleClass.add("marked-done")
+                            else
+                                obj.styleClass.add("marked-undone")
+                        }
                     }
-                    ToastController.showToast(ToastController.TOAST_SUCCESS, root, "Property successfully updated!")
+                    if (it.button != MouseButton.SECONDARY)
+                        return@setOnMouseClicked
 
-                    MainUI().update()
-                }
+                    if (property.done)
+                        view?.text = "Mark as unfinished"
+                    else
+                        view?.text = "Mark as finished"
 
-                insertNew?.setOnAction {
-                    EditUI(property).start()
-                }
-
-                deleteCurrent?.setOnAction {
-                    val alert = Alert(Alert.AlertType.CONFIRMATION);
-                    alert.title = "Delete Property"
-                    alert.headerText = "Are you sure you want to delete this property?"
-                    alert.buttonTypes.set(0, ButtonType.YES);
-                    alert.buttonTypes.set(1, ButtonType.CANCEL);
-
-                    val result = alert.showAndWait();
-                    if (result.get() == ButtonType.YES) {
-                        property.delete()
+                    view?.setOnAction {
+                        property.done = !property.done
+                        Util.runAsync {
+                            property.save()
+                        }
+                        if (property.done)
+                            Toast.success("Property marked as finished!")
+                        else
+                            Toast.success("Property marked as unfinished!")
+                        Thread.sleep(300)
                         MainUI().update()
-                        Log.info("Deleted property: " + property.title)
                     }
+
+                    insertNew?.setOnAction {
+                        EditUI(property).start()
+                    }
+
+                    deleteCurrent?.setOnAction {
+                        val alert = Alert(Alert.AlertType.CONFIRMATION);
+                        alert.initOwner(root.scene.window);
+                        alert.title = "Delete Property"
+                        alert.headerText = "Are you sure you want to delete this property?"
+                        alert.buttonTypes.set(0, ButtonType.YES);
+                        alert.buttonTypes.set(1, ButtonType.CANCEL);
+
+                        val result = alert.showAndWait();
+                        if (result.get() == ButtonType.YES) {
+                            property.delete()
+                            MainUI().update()
+                        }
+                    }
+
+                    contextMenu!!.show(obj, it.screenX, it.screenY)
+                }
+                obj.translateX = x;
+                obj.translateY = y;
+                obj.styleClass.add("parent")
+                if (property.done) {
+                    obj.styleClass.add("done")
+                } else {
+                    obj.styleClass.add("undone")
                 }
 
-                contextMenu!!.show(obj, it.screenX, it.screenY)
-            }
-            obj.translateX = x;
-            obj.translateY = y;
-            obj.styleClass.add("parent")
-            if (property.done) {
-                obj.styleClass.add("done")
-            } else {
-                obj.styleClass.add("undone")
-            }
+                val label = Label(property.title)
+                label.translateX = -10.0
+                label.styleClass.add("title")
+                obj.center = label;
+                obj.setPrefSize(450.0, 60.0)
+                obj.setMaxSize(450.0, 60.0)
+                obj.setMinSize(450.0, 60.0)
 
-            val label = Label(property.title)
-            label.translateX = -10.0
-            label.styleClass.add("title")
-            obj.center = label;
-            obj.setPrefSize(200.0, 60.0)
-            obj.setMaxSize(200.0, 60.0)
-            obj.setMinSize(200.0, 60.0)
+                y += 80.0
 
-            x += 250.0
-            if (x > width) {
-                x = -370.0
-                y += 110.0
+                obj.cursor = Cursor.HAND
+                if (property.done)
+                    finishedGroup.children.add(obj)
+                else
+                    group.children.add(obj)
             }
+        } else {
+            makeNewLabel = Label("You have no properties!\nCreate a new one now!\nClick here to create!")
+            makeNewLabel?.setOnMouseClicked {
+                InsertNewUI(1, 1).start()
+            }
+            makeNewLabel?.cursor = Cursor.HAND
+            makeNewLabel?.translateX = 350.0
+            makeNewLabel?.styleClass?.add("no-properties")
 
-            group.children.add(obj)
+            group.children.addAll(makeNewLabel)
         }
 
-        root.center = group;
+        scroll.content = group
+        val groupOfScrollBars = Group()
+
+        groupOfScrollBars.children.add(scroll)
+        finished.content = finishedGroup
+        groupOfScrollBars.children.add(finished)
+        groupOfScrollBars.translateX = -300.0
+        root.center = groupOfScrollBars
 
         stage.scene = scene
         stage.show()
     }
+
+    private var makeNewLabel: Label? = null
+    private var makeNewButton: Button? = null
 }

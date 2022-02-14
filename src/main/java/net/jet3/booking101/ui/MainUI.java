@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.hotekey.KeyHandler;
 
-import java.awt.*;
-
 public class MainUI extends Application
 {
     // Set window size, color, window label
@@ -101,9 +99,9 @@ public class MainUI extends Application
     public void update() {
         publicRoot.getChildren().clear();
 
-        preview.init(publicStage, publicRoot, publicScene);
         bar.init(publicStage, publicRoot, publicScene);
         sidebar.init(publicStage, publicRoot, publicScene);
+        preview.init(publicStage, publicRoot, publicScene);
         publicStage.show();
     }
 }

@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.object.Property;
+import net.jet3.booking101.Toast;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -97,6 +98,11 @@ public class DataHandler
     }
 
     public boolean delete() {
+        if (file.delete()) {
+            Toast.success("Deleted property '" + name + "'.");
+        } else {
+            Toast.error("Failed to delete property '" + name + "'.");
+        }
         return file.delete();
     }
 

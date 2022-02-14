@@ -9,7 +9,7 @@ sealed class UndoHandler {
             undoStack.add(undoable)
         }
 
-        fun undo():Undoable? {
+        fun undo(): Undoable? {
             if (undoStack.isEmpty()) {
                 return null
             }
@@ -33,7 +33,7 @@ sealed class UndoHandler {
 
         fun canRedo() = !redoStack.isEmpty()
 
-        fun redo():Undoable? {
+        fun redo(): Undoable? {
             if (redoStack.isEmpty()) {
                 return null
             }

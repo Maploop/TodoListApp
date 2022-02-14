@@ -3,14 +3,15 @@ package net.jet3.booking101.ui.edit
 import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
-import javafx.scene.control.ToolBar
 import javafx.scene.image.Image
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
 import javafx.stage.StageStyle
 import net.jet3.booking101.ManagementYaar
+import net.jet3.booking101.`object`.Priority
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.ui.MainUI
 import net.jet3.booking101.util.Util
@@ -50,6 +51,7 @@ class EditUI(var property: Property) {
         descriptionLabel = Label("Description")
         doneButton = Button("Done")
         cancelButton = Button("Cancel")
+        priorityBox = ComboBox()
         id = Label("ID: ${property.id}")
 
         id?.translateX = 50.0
@@ -76,6 +78,10 @@ class EditUI(var property: Property) {
         cancelButton?.prefWidth = 70.0
         cancelButton?.prefHeight = 40.0
 
+        priorityBox?.translateX = 120.0
+        priorityBox?.translateY = 100.0
+        priorityBox?.items?.addAll(Priority.LOW.name, Priority.MEDIUM.name, Priority.HIGH.name)
+
         title?.styleClass?.add("text-field")
         description?.styleClass?.add("text-field")
         doneButton?.styleClass?.add("button")
@@ -96,7 +102,7 @@ class EditUI(var property: Property) {
             parent!!.scene.window.hide()
         }
 
-        group.children.addAll(id, title, description, titleLabel, descriptionLabel, doneButton, cancelButton)
+        group.children.addAll(id, title, description, titleLabel, descriptionLabel, doneButton, cancelButton, priorityBox)
         parent?.top = group
     }
 
@@ -106,5 +112,6 @@ class EditUI(var property: Property) {
     var descriptionLabel: Label? = null
     var doneButton: Button? = null
     var cancelButton: Button? = null
+    var priorityBox: ComboBox<String>? = null
     var id: javafx.scene.control.Label? = null
 }

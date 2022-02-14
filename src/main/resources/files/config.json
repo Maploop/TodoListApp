@@ -4,5 +4,7 @@
   "maximized": false,
   "width": 1200,
   "height": 650,
-  "developerMode": false
+  "developerMode": false,
+  "todoText": "To Do",
+  "doneText": "Done"
 }

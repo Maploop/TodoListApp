@@ -1,7 +1,12 @@
 package net.jet3.booking101.hotekey
 
+import javafx.scene.control.Alert
+import javafx.scene.control.ButtonType
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
+import net.jet3.booking101.ManagementYaar
+import net.jet3.booking101.Toast
+import net.jet3.booking101.ui.MainUI
 import net.jet3.booking101.undoHandler.UndoHandler
 
 class KeyHandler() {
@@ -36,6 +41,30 @@ class KeyHandler() {
             if (isControl) {
                 UndoHandler.redo()
                 println("Redid last action")
+            }
+        }
+
+        if (code == KeyCode.DELETE) {
+            if (ManagementYaar.selectedProperties.isEmpty()) {
+                Toast.error("You do not have any properties selected!")
+                return
+            }
+
+            val alert = Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(MainUI.publicScene.window);
+            alert.title = "Delete Properties"
+            alert.headerText = "Are you sure you want to delete " + ManagementYaar.selectedProperties.size + " properties?"
+            alert.buttonTypes.set(0, ButtonType.YES);
+            alert.buttonTypes.set(1, ButtonType.CANCEL);
+
+            val result = alert.showAndWait();
+            if (result.get() == ButtonType.YES) {
+                val list = ManagementYaar.selectedProperties
+                for (prop in list) {
+                    prop.delete()
+                    ManagementYaar.selectedProperties.remove(prop)
+                }
+                MainUI().update()
             }
         }
     }

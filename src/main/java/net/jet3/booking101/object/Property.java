@@ -2,6 +2,7 @@ package net.jet3.booking101.object;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.data.DataHandler;
 import net.jet3.booking101.util.Log;
 
@@ -93,7 +94,11 @@ public class Property
         return PROPERTY_CACHE.get(id);
     }
 
-    public static List<Property> getAllActions() {
+    public static Collection<Property> getAllActions() {
+        return PROPERTY_CACHE.values();
+    }
+
+    public static List<Property> cache() {
         List<Property> list = new ArrayList<>();
 
         for (UUID id : DataHandler.getAll()) {
@@ -107,6 +112,7 @@ public class Property
 
     public boolean delete() {
         PROPERTY_CACHE.remove(this.id);
+        ManagementYaar.selectedProperties.remove(this);
         return handler.delete();
     }
 }

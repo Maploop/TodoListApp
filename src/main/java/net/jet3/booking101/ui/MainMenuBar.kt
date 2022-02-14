@@ -12,7 +12,6 @@ import javafx.stage.FileChooser
 import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.initalization.ApplicationInitalizer
-import net.jet3.booking101.ui.dev.ApplicationConsole
 import net.jet3.booking101.ui.dev.ConsoleUI
 import net.jet3.booking101.ui.edit.InsertNewUI
 import net.jet3.booking101.ui.settings.SettingsUI
