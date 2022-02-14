@@ -3,6 +3,7 @@ package net.jet3.booking101;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -11,17 +12,23 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import net.jet3.booking101.ui.MainUI;
+import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.control.action.Action;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class Toast {
@@ -157,5 +164,28 @@ public class Toast {
 
     public static void error(String msg) {
         showToast(TOAST_ERROR, "Error!", msg);
+    }
+
+    public static void popPane(String msg) {
+        // Create a WebView
+        WebView webView = new WebView();
+
+        // Wrap it inside a NotificationPane
+        NotificationPane notificationPane = new NotificationPane(webView);
+
+        // and put the NotificationPane inside a Tab
+        Tab tab1 = new Tab("Tab 1");
+        tab1.setContent(notificationPane);
+
+        // and the Tab inside a TabPane. We just have one tab here, but of course
+        // you can have more!
+        TabPane tabPane = new TabPane();
+        tabPane.getTabs().addAll(tab1);
+        notificationPane.show();
+
+        notificationPane.setText("Do you want to save your password?");
+        notificationPane.getActions().add(new Action((e) -> {
+            notificationPane.hide();
+        }));
     }
 }

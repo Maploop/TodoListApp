@@ -6,3 +6,27 @@
     -fx-background-color: lightblue;
     -fx-cursor: hand;
 }
+.text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-border-color: lavender;
+    -fx-border-width: 2px;
+}
+.combo {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-border-color: lavender;
+    -fx-border-width: 2px;
+}
+.errored {
+    -fx-border-color: red;
+}
+.check-box {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-border-color: lavender;
+    -fx-border-width: 2px;
+}

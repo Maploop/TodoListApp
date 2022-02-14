@@ -5,9 +5,12 @@ import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.stage.Stage
 import net.jet3.booking101.Toast
+import net.jet3.booking101.`object`.Priority
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.`object`.PropertyType
 import net.jet3.booking101.ui.MainUI
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 class InsertNewUI(var column: Int, var row: Int) {
@@ -38,14 +41,16 @@ class InsertNewUI(var column: Int, var row: Int) {
         titleField?.minWidth = 400.0
         titleLabel?.translateX = 10.0
         titleLabel?.translateY = 10.0
+        titleField?.styleClass?.add("text-field")
 
         typeCombo = ComboBox<String>()
         typeCombo?.translateX = 70.0
         typeCombo?.translateY = 60.0
         typeCombo?.maxWidth = 300.0
         typeCombo?.minWidth = 300.0
-        typeCombo?.value = "Select type"
-        typeCombo?.items?.addAll("Task", "Reminder", "Note")
+        typeCombo?.value = "Priority"
+        typeCombo?.items?.addAll("Low", "Medium", "High")
+        typeCombo?.styleClass?.add("combo")
 
         description = TextField()
         description?.translateX = 70.0
@@ -53,21 +58,21 @@ class InsertNewUI(var column: Int, var row: Int) {
         description?.maxWidth = 400.0
         description?.minWidth = 400.0
         description?.text = "Description"
+        description?.styleClass?.add("text-field")
 
         remindMe = CheckBox()
         remindMe?.translateX = 70.0
-        remindMe?.translateY = 140.0
-        remindMe?.text = "Remind me when the time arrives"
+        remindMe?.translateY = 150.0
+        remindMe?.text = "Has a due date"
         remindMe?.isSelected = false
+        remindMe?.styleClass?.add("check-box")
 
-        year?.translateY = 170.0
-        month?.translateY = 170.0
-        day?.translateY = 170.0
-        hour?.translateY = 170.0
+        year?.translateY = 180.0
+        month?.translateY = 180.0
+        day?.translateY = 180.0
         year?.translateX = 70.0
-        month?.translateX = 120.0
-        day?.translateX = 170.0
-        hour?.translateX = 220.0
+        month?.translateX = 150.0
+        day?.translateX = 230.0
 
         confirmButton.translateX = 280.0
         confirmButton.translateY = 300.0
@@ -77,7 +82,7 @@ class InsertNewUI(var column: Int, var row: Int) {
         confirmButton.minHeight = 30.0
         confirmButton.styleClass.add("buttons")
 
-        cancelButton.translateX = 400.0
+        cancelButton.translateX = 390.0
         cancelButton.translateY = 300.0
         cancelButton.maxWidth = 100.0
         cancelButton.minWidth = 100.0
@@ -85,28 +90,71 @@ class InsertNewUI(var column: Int, var row: Int) {
         cancelButton.minHeight = 30.0
         cancelButton.styleClass.add("buttons")
 
-        year?.minWidth = 50.0
-        month?.minWidth = 50.0
-        day?.minWidth = 50.0
-        hour?.minWidth = 50.0
-        year?.maxWidth = 50.0
-        month?.maxWidth = 50.0
-        day?.maxWidth = 50.0
-        hour?.maxWidth = 50.0
-        remindMeLabel = Label("Remind me")
+        year?.minWidth = 70.0
+        month?.minWidth = 70.0
+        day?.minWidth = 70.0
+        hour?.minWidth = 70.0
+        year?.maxWidth = 70.0
+        month?.maxWidth = 70.0
+        day?.maxWidth = 70.0
+        hour?.maxWidth = 70.0
+        year?.isVisible = false
+        month?.isVisible = false
+        day?.isVisible = false
+        hour?.isVisible = false
+        year?.text = "Year"
+        month?.text = "Month"
+        day?.text = "Day"
+        year?.styleClass?.add("text-field")
+        month?.styleClass?.add("text-field")
+        day?.styleClass?.add("text-field")
+        remindMeLabel = Label("Has a due date")
+
+        remindMe?.setOnAction {
+            if (remindMe?.isSelected == true) {
+                year?.isVisible = true
+                month?.isVisible = true
+                day?.isVisible = true
+            } else {
+                year?.isVisible = false
+                month?.isVisible = false
+                day?.isVisible = false
+            }
+        }
 
         confirmButton.setOnMouseClicked {
-            val action = Property.getProperty(UUID.randomUUID());
-            action.title = titleField?.text
-            action.type = typeCombo?.value?.let { it1 -> PropertyType.valueOf(it1.uppercase()) }
-            action.description = description?.text
-            action.notify = remindMe!!.isSelected
-            action.dateToExecute = GregorianCalendar(year?.text!!.toInt(), month?.text!!.toInt(), day?.text!!.toInt(), hour?.text!!.toInt(), 0).timeInMillis
-            action.save()
+            try {
+                val action = Property.getProperty(UUID.randomUUID());
+                action.title = titleField?.text
+                action.type = PropertyType.TASK
+                action.description = description?.text
+                action.notify = remindMe!!.isSelected
+                action.priority = typeCombo?.value?.let { it1 -> Priority.valueOf(it1.uppercase()) }
 
-            stage?.close()
-            MainUI().update()
-            Toast.success("New property '" + action.title + "' created!")
+                if (remindMe?.isSelected == true) {
+                    val year = year?.text!!.toInt()
+                    val month = month?.text!!.toInt()
+                    val day = day?.text!!.toInt()
+
+                    action.dateToExecute = LocalDateTime.of(year, month, day, 0, 0).toInstant(ZoneOffset.UTC).toEpochMilli()
+                }
+
+                action.save()
+
+                stage?.close()
+                MainUI().update()
+                Toast.success("New property '" + action.title + "' created!")
+            } catch (ex: Exception) {
+                Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
+                if (ex.message!!.contains("For input")) {
+                    day?.styleClass?.add("errored")
+                    month?.styleClass?.add("errored")
+                    year?.styleClass?.add("errored")
+                }
+                if (ex.message!!.contains("No enum")) {
+                    typeCombo?.styleClass?.add("errored")
+                }
+            }
         }
 
         cancelButton.setOnMouseClicked {

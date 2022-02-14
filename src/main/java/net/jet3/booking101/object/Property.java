@@ -36,6 +36,9 @@ public class Property
     @Getter
     @Setter
     public boolean done;
+    @Getter
+    @Setter
+    public Priority priority;
 
     private DataHandler handler;
 
@@ -50,6 +53,7 @@ public class Property
         this.notify = false;
         this.handler = new DataHandler(id.toString());
         this.done = false;
+        this.priority = Priority.LOW;
 
         boolean save = false;
         if (!handler.exists()) {
@@ -73,6 +77,7 @@ public class Property
         handler.set("dateToExecute", dateToExecute);
         handler.set("notify", notify);
         handler.set("done", done);
+        handler.set("priority", priority.name());
 
         handler.save();
     }
@@ -86,6 +91,7 @@ public class Property
         this.description = handler.getString("description");
         this.dateToExecute = handler.getLong("dateToExecute");
         this.notify = handler.getBoolean("notify");
+        this.priority = Priority.valueOf(handler.getString("priority"));
     }
 
     public static Property getProperty(UUID id) {
