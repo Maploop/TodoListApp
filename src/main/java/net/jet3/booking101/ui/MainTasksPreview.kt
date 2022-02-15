@@ -13,6 +13,7 @@ import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.ui.edit.EditUI
 import net.jet3.booking101.ui.edit.InsertNewUI
+import net.jet3.booking101.util.FXDialogs
 import net.jet3.booking101.util.Log
 import net.jet3.booking101.util.Util
 
@@ -85,18 +86,6 @@ class MainTasksPreview {
                             EditUI(property).start()
                             return@setOnMouseClicked
                         }
-                        if (obj.styleClass.contains("marked-undone") || obj.styleClass.contains("marked-done")) {
-                            obj.styleClass.removeIf { it1 ->
-                                it1.contains("marked")
-                            }
-                            ManagementYaar.selectedProperties.remove(property)
-                        } else {
-                            ManagementYaar.selectedProperties.add(property)
-                            if (property.done)
-                                obj.styleClass.add("marked-done")
-                            else
-                                obj.styleClass.add("marked-undone")
-                        }
                     }
                     if (it.button != MouseButton.SECONDARY)
                         return@setOnMouseClicked
@@ -123,15 +112,8 @@ class MainTasksPreview {
                     }
 
                     deleteCurrent?.setOnAction {
-                        val alert = Alert(Alert.AlertType.CONFIRMATION);
-                        alert.initOwner(root.scene.window);
-                        alert.title = "Delete Property"
-                        alert.headerText = "Are you sure you want to delete this property?"
-                        alert.buttonTypes.set(0, ButtonType.YES);
-                        alert.buttonTypes.set(1, ButtonType.CANCEL);
-
-                        val result = alert.showAndWait();
-                        if (result.get() == ButtonType.YES) {
+                        val result = FXDialogs.showConfirm("Are you sure you want to delete this property?", "", "Yes", "Cancel")
+                        if (result == "Yes") {
                             property.delete()
                             MainUI().update()
                         }

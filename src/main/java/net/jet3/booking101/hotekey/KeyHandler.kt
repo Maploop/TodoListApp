@@ -8,6 +8,7 @@ import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.Toast
 import net.jet3.booking101.ui.MainUI
 import net.jet3.booking101.undoHandler.UndoHandler
+import net.jet3.booking101.util.FXDialogs
 
 class KeyHandler() {
     var isControl = false
@@ -50,15 +51,9 @@ class KeyHandler() {
                 return
             }
 
-            val alert = Alert(Alert.AlertType.CONFIRMATION);
-            alert.initOwner(MainUI.publicScene.window);
-            alert.title = "Delete Properties"
-            alert.headerText = "Are you sure you want to delete " + ManagementYaar.selectedProperties.size + " properties?"
-            alert.buttonTypes.set(0, ButtonType.YES);
-            alert.buttonTypes.set(1, ButtonType.CANCEL);
+            val result = FXDialogs.showConfirm("Are you sure you want to delete " + ManagementYaar.selectedProperties.size + " properties?", "", "Yes", "Cancel")
 
-            val result = alert.showAndWait();
-            if (result.get() == ButtonType.YES) {
+            if (result == "Yes") {
                 val list = ManagementYaar.selectedProperties
                 for (prop in list) {
                     prop.delete()

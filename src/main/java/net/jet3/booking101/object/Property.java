@@ -42,7 +42,7 @@ public class Property
 
     private DataHandler handler;
 
-    private Property(UUID id) {
+    private Property(UUID id, boolean performSave) {
         this.id = id;
         this.row = 0;
         this.column = 0;
@@ -55,16 +55,20 @@ public class Property
         this.done = false;
         this.priority = Priority.LOW;
 
-        boolean save = false;
-        if (!handler.exists()) {
-            save = true;
-            handler.make();
-            Log.info("Creating new action with id " + id);
-        }
+        PROPERTY_CACHE.put(id, this);
 
-        if (save)
-            save();
-        load();
+        if (performSave) {
+            boolean save = false;
+            if (!handler.exists()) {
+                save = true;
+                handler.make();
+                Log.info("Creating new action with id " + id);
+            }
+
+            if (save)
+                save();
+            load();
+        }
     }
 
     public void save() {
@@ -82,6 +86,19 @@ public class Property
         handler.save();
     }
 
+    public void create() {
+        boolean save = false;
+        if (!handler.exists()) {
+            save = true;
+            handler.make();
+            Log.info("Creating new action with id " + id);
+        }
+
+        if (save)
+            save();
+        load();
+    }
+
     public void load() {
         this.id = UUID.fromString(handler.getString("id"));
         this.row = handler.getInt("row");
@@ -96,8 +113,12 @@ public class Property
 
     public static Property getProperty(UUID id) {
         if (!PROPERTY_CACHE.containsKey(id))
-            PROPERTY_CACHE.put(id, new Property(id));
+            PROPERTY_CACHE.put(id, new Property(id, true));
         return PROPERTY_CACHE.get(id);
+    }
+
+    public static Property New(UUID id) {
+        return new Property(id, false);
     }
 
     public static Collection<Property> getAllActions() {
@@ -109,7 +130,7 @@ public class Property
 
         for (UUID id : DataHandler.getAll()) {
             if (!PROPERTY_CACHE.containsKey(id))
-                PROPERTY_CACHE.put(id, new Property(id));
+                PROPERTY_CACHE.put(id, new Property(id, true));
             list.add(PROPERTY_CACHE.get(id));
         }
 

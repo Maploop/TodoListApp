@@ -30,9 +30,12 @@ class InsertNewUI(var column: Int, var row: Int) {
     var confirmButton:Button = Button("Create")
     var cancelButton:Button = Button("Cancel")
 
+    private var id: UUID? = null
+
     private var stage: Stage?= null;
 
-    fun InsertNewUI() {
+    init {
+        id = UUID.randomUUID()
         titleField = TextField()
         titleField?.text = "Title"
         titleField?.translateX = 70.0
@@ -123,38 +126,40 @@ class InsertNewUI(var column: Int, var row: Int) {
         }
 
         confirmButton.setOnMouseClicked {
+            val action = Property.New(this.id);
+            action.title = titleField?.text
+            action.type = PropertyType.TASK
+            action.description = description?.text
+            action.notify = remindMe!!.isSelected
             try {
-                val action = Property.getProperty(UUID.randomUUID());
-                action.title = titleField?.text
-                action.type = PropertyType.TASK
-                action.description = description?.text
-                action.notify = remindMe!!.isSelected
                 action.priority = typeCombo?.value?.let { it1 -> Priority.valueOf(it1.uppercase()) }
+            } catch (ex: Exception) {
+                Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
+                typeCombo?.styleClass?.add("errored")
+                return@setOnMouseClicked
+            }
 
-                if (remindMe?.isSelected == true) {
+            if (remindMe?.isSelected == true) {
+                try {
                     val year = year?.text!!.toInt()
                     val month = month?.text!!.toInt()
                     val day = day?.text!!.toInt()
-
-                    action.dateToExecute = LocalDateTime.of(year, month, day, 0, 0).toInstant(ZoneOffset.UTC).toEpochMilli()
-                }
-
-                action.save()
-
-                stage?.close()
-                MainUI().update()
-                Toast.success("New property '" + action.title + "' created!")
-            } catch (ex: Exception) {
-                Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
-                if (ex.message!!.contains("For input")) {
+                    action.dateToExecute =
+                        LocalDateTime.of(year, month, day, 0, 0).toInstant(ZoneOffset.UTC).toEpochMilli()
+                } catch (ex: Exception) {
+                    Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
                     day?.styleClass?.add("errored")
                     month?.styleClass?.add("errored")
                     year?.styleClass?.add("errored")
-                }
-                if (ex.message!!.contains("No enum")) {
-                    typeCombo?.styleClass?.add("errored")
+                    return@setOnMouseClicked
                 }
             }
+
+            action.create()
+
+            stage?.close()
+            MainUI().update()
+            Toast.success("New property '" + action.title + "' created!")
         }
 
         cancelButton.setOnMouseClicked {
@@ -163,8 +168,6 @@ class InsertNewUI(var column: Int, var row: Int) {
     }
 
     fun start() {
-        InsertNewUI()
-
         val primaryStage = Stage()
         primaryStage.initOwner(MainUI.publicScene.window)
 
