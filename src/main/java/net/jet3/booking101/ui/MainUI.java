@@ -51,6 +51,8 @@ public class MainUI extends Application
         primaryStage.setTitle(windowLabel);
 
         BorderPane root = new BorderPane();
+        root.getStylesheets().add("jfxstyle/main.css");
+        root.getStyleClass().add("root");
         Scene scene = new Scene(root, xSize, ySize, backgroundColor);
         bar.init(primaryStage, root, scene);
         preview.init(primaryStage, root, scene);
@@ -58,8 +60,6 @@ public class MainUI extends Application
         primaryStage.setScene(scene);
         scene.getStylesheets().add("jfxstyle/main.css");
         sidebar.init(primaryStage, root, scene);
-
-        root.getChildren().add(scrollLeftRight);
 
         publicRoot = root;
         publicScene = scene;
