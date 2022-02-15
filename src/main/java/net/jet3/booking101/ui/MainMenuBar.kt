@@ -12,13 +12,14 @@ import javafx.stage.FileChooser
 import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.initalization.ApplicationInitalizer
-import net.jet3.booking101.ui.dev.ConsoleUI
 import net.jet3.booking101.ui.edit.InsertNewUI
 import net.jet3.booking101.ui.settings.SettingsUI
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.redo
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.undo
+import net.jet3.booking101.util.FXDialogs
 import net.jet3.booking101.util.Util
 import org.json.simple.JSONObject
+import java.lang.Exception
 
 class MainMenuBar {
     private var file: Menu? = null
@@ -91,7 +92,7 @@ class MainMenuBar {
             val appConsole = MenuItem("Application Console")
             developer!!.items.add(appConsole)
             appConsole.setOnAction {
-                ConsoleUI().start()
+                FXDialogs.showException("Error!", "An exception has occurred while loading the app.", Exception("HI"))
             }
         }
     }

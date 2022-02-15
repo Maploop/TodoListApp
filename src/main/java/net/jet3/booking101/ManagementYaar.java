@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.ui.MainUI;
 import net.jet3.booking101.ui.dev.ApplicationConsole;
+import net.jet3.booking101.util.FXDialogs;
 import net.jet3.booking101.util.Util;
 import net.jet3.booking101.object.Property;
 import net.jet3.booking101.util.Log;
@@ -20,16 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Copyright (c) SpecTY. All rights reserved.
- * Owned by Soroush Behzadi
- */
 public class ManagementYaar
 {
     public static ManagementYaar instance;
-
-    public static String today = "";
-    public static String todayComputer = "";
 
     public ApplicationConsole console;
 
@@ -44,15 +38,12 @@ public class ManagementYaar
     public ManagementYaar(String... args) {
         instance = this;
 
+        Log.info("Loading application files...");
         ApplicationInitalizer.init();
 
         Log.info("Loading local data...");
         console = new ApplicationConsole();
         Property.cache();
-
-        Date date = new Date();
-        today = Util.prettify(String.valueOf(date.getDay())) + " of " + Util.getMonth(date.getMonth()) + " " + date.getYear();
-        todayComputer = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
         Application.launch(MainUI.class, args);
     }

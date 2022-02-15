@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
 import javafx.stage.StageStyle
 import net.jet3.booking101.ManagementYaar
+import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Priority
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.ui.MainUI
@@ -42,6 +43,7 @@ class EditUI(var property: Property) {
     }
 
     fun InitializeComponents() {
+        val editorRoot = BorderPane()
         val group = Group()
         group.styleClass.add("editor-root")
 
@@ -60,14 +62,14 @@ class EditUI(var property: Property) {
         title?.translateX = 120.0
         title?.translateY = 40.0
         title?.prefWidth = 400.0
-        titleLabel?.translateX = 30.0
+        titleLabel?.translateX = 40.0
         titleLabel?.translateY = 40.0
 
         description?.translateX = 120.0
-        description?.translateY = 70.0
+        description?.translateY = 80.0
         description?.prefWidth = 400.0
         descriptionLabel?.translateX = 30.0
-        descriptionLabel?.translateY = 70.0
+        descriptionLabel?.translateY = 80.0
 
         doneButton?.translateX = 300.0
         cancelButton?.translateX = 420.0
@@ -79,18 +81,29 @@ class EditUI(var property: Property) {
         cancelButton?.prefHeight = 40.0
 
         priorityBox?.translateX = 120.0
-        priorityBox?.translateY = 100.0
+        priorityBox?.translateY = 120.0
         priorityBox?.items?.addAll(Priority.LOW.name, Priority.MEDIUM.name, Priority.HIGH.name)
+        priorityBox?.value = property.priority.name
+        priorityBox?.styleClass?.add("combo")
 
         title?.styleClass?.add("text-field")
         description?.styleClass?.add("text-field")
-        doneButton?.styleClass?.add("button")
-        cancelButton?.styleClass?.add("button")
+        doneButton?.styleClass?.add("buttons")
+        cancelButton?.styleClass?.add("buttons")
         id?.styleClass?.add("label")
 
         doneButton?.setOnAction {
+            if (title?.text == "" || description?.text == "") {
+                title?.styleClass?.add("errored")
+                description?.styleClass?.add("errored")
+
+                Toast.warn("Please don't leave the highlighted fields empty!")
+                return@setOnAction
+            }
+
             property.title = title?.text
             property.description = description?.text
+            property.priority = priorityBox?.value?.let { it1 -> Priority.valueOf(it1) }
             Util.runAsync {
                 property.save()
             }
@@ -102,8 +115,11 @@ class EditUI(var property: Property) {
             parent!!.scene.window.hide()
         }
 
+
+
         group.children.addAll(id, title, description, titleLabel, descriptionLabel, doneButton, cancelButton, priorityBox)
-        parent?.top = group
+        editorRoot.top = group
+        parent?.top = editorRoot
     }
 
     var title: TextField? = null

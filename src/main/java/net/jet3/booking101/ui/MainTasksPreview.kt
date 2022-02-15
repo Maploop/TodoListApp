@@ -1,6 +1,5 @@
 package net.jet3.booking101.ui
 
-import javafx.application.Application
 import javafx.scene.Cursor
 import javafx.scene.Group
 import javafx.scene.Scene
@@ -12,16 +11,10 @@ import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Property
-import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.edit.EditUI
 import net.jet3.booking101.ui.edit.InsertNewUI
-import net.jet3.booking101.util.IDraggable
 import net.jet3.booking101.util.Log
 import net.jet3.booking101.util.Util
-import org.controlsfx.control.Notifications
-import java.util.*
-import kotlin.time.Duration
-import java.util.TimerTask as TimerTask1
 
 class MainTasksPreview {
     private var root: StackPane? = null
@@ -122,7 +115,6 @@ class MainTasksPreview {
                             Toast.success("Property marked as finished!")
                         else
                             Toast.success("Property marked as unfinished!")
-                        Thread.sleep(300)
                         MainUI().update()
                     }
 

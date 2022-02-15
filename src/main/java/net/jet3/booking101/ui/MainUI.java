@@ -3,8 +3,6 @@ package net.jet3.booking101.ui;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
@@ -14,8 +12,6 @@ import javafx.stage.Stage;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.hotekey.KeyHandler;
 import net.jet3.booking101.util.FXDialogs;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.CommandLinksDialog;
 
 public class MainUI extends Application
 {
@@ -28,8 +24,7 @@ public class MainUI extends Application
     private MainMenuBar bar;
     private MainMenuSidebar sidebar;
     private MainTasksPreview preview;
-    private Label projectLabel;
-    
+
     private ScrollBar scrollLeftRight;
 
     public static Stage publicStage;
@@ -39,11 +34,7 @@ public class MainUI extends Application
     public MainUI() {
         bar = new MainMenuBar();
         sidebar = new MainMenuSidebar();
-        projectLabel = new Label("Today is the " + ManagementYaar.today);
         preview = new MainTasksPreview();
-        projectLabel.getStyleClass().add("project-label");
-        projectLabel.setTranslateX(5);
-        projectLabel.setTranslateY(50);
         scrollLeftRight = new ScrollBar();
         scrollLeftRight.setOrientation(Orientation.HORIZONTAL);
         scrollLeftRight.setPrefHeight(20);
@@ -65,7 +56,6 @@ public class MainUI extends Application
         preview.init(primaryStage, root, scene);
         primaryStage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon2.png")));
         primaryStage.setScene(scene);
-        root.getChildren().add(projectLabel);
         scene.getStylesheets().add("jfxstyle/main.css");
         sidebar.init(primaryStage, root, scene);
 
@@ -76,8 +66,6 @@ public class MainUI extends Application
         publicStage = primaryStage;
 
         primaryStage.setOnCloseRequest(e -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
             String response = FXDialogs.showConfirm("Are you sure you want to exit?", "", "Exit", "Cancel");
             if (response.equals("Exit"))
                 ManagementYaar.exit();

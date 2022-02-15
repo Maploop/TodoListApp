@@ -7,7 +7,6 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
 import net.jet3.booking101.component.AppConsole
-import net.jet3.booking101.component.Console
 
 class ConsoleUI {
     var field: TextField = TextField()

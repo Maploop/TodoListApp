@@ -19,3 +19,8 @@
     -fx-font-weight: bold;
     -fx-text-fill: #0076a3;
 }
+.label-done {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0076a3;
+}
