@@ -3,7 +3,6 @@ package net.jet3.booking101.ui;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -56,7 +55,7 @@ public class MainUI extends Application
         Scene scene = new Scene(root, xSize, ySize, backgroundColor);
         bar.init(primaryStage, root, scene);
         preview.init(primaryStage, root, scene);
-        primaryStage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon2.png")));
+        primaryStage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon9.png")));
         primaryStage.setScene(scene);
         scene.getStylesheets().add("jfxstyle/main.css");
         sidebar.init(primaryStage, root, scene);
