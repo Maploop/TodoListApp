@@ -5,12 +5,14 @@ import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.object.Property;
 import net.jet3.booking101.Toast;
+import net.jet3.booking101.util.FXDialogs;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,8 @@ public class DataHandler
     private File file;
     private String name;
     private JSONObject object;
+    private File croot;
+    private String custom;
 
     public DataHandler(String name) {
         File file = new File(ROOT_FOLDER, name + ".json");
@@ -39,6 +43,24 @@ public class DataHandler
         }
         this.file = file;
         this.name = name;
+        this.croot = null;
+        this.custom = null;
+    }
+
+    public DataHandler(File rootFolder, String name, String custom) {
+        File file = new File(rootFolder, name + "." + custom);
+        if (file.exists()) {
+            try {
+                this.object = (JSONObject) new JSONParser().parse(new FileReader(file));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                ManagementYaar.pop(Alert.AlertType.ERROR, "Error!", "Failed to load one or multiple actions.\n" + ex.getMessage());
+            }
+        }
+        this.file = file;
+        this.name = name;
+        this.croot = rootFolder;
+        this.custom = custom;
     }
 
     public void make() {
@@ -126,8 +148,30 @@ public class DataHandler
     }
 
     public static Property get(int row, int col) {
-        return Property.getAllActions().stream().filter((property) -> {
-            return property.column == col && property.row == row;
-        }).collect(Collectors.toList()).get(0);
+        return Property.getAllActions().stream().filter((property) -> property.column == col && property.row == row).collect(Collectors.toList()).get(0);
+    }
+
+    public void rename(String newName) {
+        if (croot == null) {
+            File newFile = new File(ROOT_FOLDER, newName + ".json");
+            try {
+                newFile.createNewFile();
+                Files.move(file.toPath(), newFile.toPath());
+                file.delete();
+            } catch (Exception ex) {
+                FXDialogs.showException("An error occurred renaming your workspace.", "", ex);
+            }
+            this.file = newFile;
+            return;
+        }
+        File newFile = new File(croot, newName + "." + custom);
+        try {
+            newFile.createNewFile();
+            Files.move(file.toPath(), newFile.toPath());
+            file.delete();
+        } catch (Exception ex) {
+            FXDialogs.showException("An error occurred renaming your workspace.", "", ex);
+        }
+        this.file = newFile;
     }
 }

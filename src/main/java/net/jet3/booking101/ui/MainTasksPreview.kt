@@ -74,7 +74,7 @@ class MainTasksPreview {
         finishedGroup.translateX = 25.0
         finishedGroup.translateY = 25.0
 
-        if (!Property.getAllActions().isEmpty()) {
+        if (!ManagementYaar.WORKSPACE.properties.isEmpty()) {
             for (property in Property.getAllActions()) {
                 val obj = BorderPane()
 

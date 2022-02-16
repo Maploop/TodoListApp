@@ -3,11 +3,14 @@ package net.jet3.booking101.ui.edit
 import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.control.*
+import javafx.scene.input.KeyCode
 import javafx.stage.Stage
+import javafx.stage.StageStyle
 import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Priority
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.`object`.PropertyType
+import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.MainUI
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -37,7 +40,7 @@ class InsertNewUI(var column: Int, var row: Int) {
     init {
         id = UUID.randomUUID()
         titleField = TextField()
-        titleField?.text = "Title"
+        titleField?.promptText = "Title"
         titleField?.translateX = 70.0
         titleField?.translateY = 10.0
         titleField?.maxWidth = 400.0
@@ -60,8 +63,19 @@ class InsertNewUI(var column: Int, var row: Int) {
         description?.translateY = 110.0
         description?.maxWidth = 400.0
         description?.minWidth = 400.0
-        description?.text = "Description"
+        description?.promptText = "Description"
         description?.styleClass?.add("text-field")
+
+        titleField!!.textProperty().addListener { observable, oldValue, newValue ->
+            run {
+                titleField!!.styleClass.remove("errored")
+            }
+        }
+        description!!.textProperty().addListener { observable, oldValue, newValue ->
+            run {
+                description!!.styleClass.remove("errored")
+            }
+        }
 
         remindMe = CheckBox()
         remindMe?.translateX = 70.0
@@ -105,9 +119,9 @@ class InsertNewUI(var column: Int, var row: Int) {
         month?.isVisible = false
         day?.isVisible = false
         hour?.isVisible = false
-        year?.text = "Year"
-        month?.text = "Month"
-        day?.text = "Day"
+        year?.promptText = "Year"
+        month?.promptText = "Month"
+        day?.promptText = "Day"
         year?.styleClass?.add("text-field")
         month?.styleClass?.add("text-field")
         day?.styleClass?.add("text-field")
@@ -124,57 +138,69 @@ class InsertNewUI(var column: Int, var row: Int) {
                 day?.isVisible = false
             }
         }
-
-        confirmButton.setOnMouseClicked {
-            val action = Property.New(this.id);
-            action.title = titleField?.text
-            action.type = PropertyType.TASK
-            action.description = description?.text
-            action.notify = remindMe!!.isSelected
-            try {
-                action.priority = typeCombo?.value?.let { it1 -> Priority.valueOf(it1.uppercase()) }
-            } catch (ex: Exception) {
-                Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
-                typeCombo?.styleClass?.add("errored")
-                return@setOnMouseClicked
-            }
-
-            if (remindMe?.isSelected == true) {
-                try {
-                    val year = year?.text!!.toInt()
-                    val month = month?.text!!.toInt()
-                    val day = day?.text!!.toInt()
-                    action.dateToExecute =
-                        LocalDateTime.of(year, month, day, 0, 0).toInstant(ZoneOffset.UTC).toEpochMilli()
-                } catch (ex: Exception) {
-                    Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
-                    day?.styleClass?.add("errored")
-                    month?.styleClass?.add("errored")
-                    year?.styleClass?.add("errored")
-                    return@setOnMouseClicked
-                }
-            }
-
-            action.create()
-
-            stage?.close()
-            MainUI().update()
-            Toast.success("New property '" + action.title + "' created!")
-        }
-
-        cancelButton.setOnMouseClicked {
-            stage?.close()
-        }
     }
 
     fun start() {
         val primaryStage = Stage()
         primaryStage.initOwner(MainUI.publicScene.window)
+        primaryStage.initStyle(StageStyle.UNDECORATED)
 
         primaryStage.title = "Insert New"
 
-        val root = Group(titleField, typeCombo, description, remindMe, titleLabel, year, month, day, hour, cancelButton, confirmButton)
-        primaryStage.scene = Scene(root, 500.0, 350.0)
+        val root = Group(titleField, typeCombo, description, remindMe, year, month, day, hour)
+        val sc = Scene(root, 500.0, 230.0)
+
+        sc.setOnKeyPressed {
+            if (it.code == KeyCode.ENTER) {
+                val action = Property.New(this.id);
+                action.title = titleField?.text
+                action.type = PropertyType.TASK
+                action.description = description?.text
+                action.notify = remindMe!!.isSelected
+                try {
+                    action.priority = typeCombo?.value?.let { it1 -> Priority.valueOf(it1.uppercase()) }
+                } catch (ex: Exception) {
+                    Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
+                    typeCombo?.styleClass?.add("errored")
+                    return@setOnKeyPressed
+                }
+
+                if (titleField!!.text == "" || description!!.text == "") {
+                    Toast.warn("Please make sure to fill in the highlighted fields!")
+                    titleField!!.styleClass.add("errored")
+                    description!!.styleClass.add("errored")
+                    return@setOnKeyPressed
+                }
+
+                if (remindMe?.isSelected == true) {
+                    try {
+                        val year = year?.text!!.toInt()
+                        val month = month?.text!!.toInt()
+                        val day = day?.text!!.toInt()
+                        action.dateToExecute =
+                            LocalDateTime.of(year, month, day, 0, 0).toInstant(ZoneOffset.UTC).toEpochMilli()
+                    } catch (ex: Exception) {
+                        Toast.warn("An unexpected error has occurred while\nperforming the requested action:\n" + ex.message)
+                        day?.styleClass?.add("errored")
+                        month?.styleClass?.add("errored")
+                        year?.styleClass?.add("errored")
+                        return@setOnKeyPressed
+                    }
+                }
+
+                action.create()
+                ApplicationInitalizer.updateWorkspace()
+
+                stage?.close()
+                MainUI().update()
+                Toast.success("New property '" + action.title + "' created!")
+            }
+            if (it.code == KeyCode.ESCAPE) {
+                primaryStage.close()
+            }
+        }
+
+        primaryStage.scene = sc
         primaryStage.scene.stylesheets.add("jfxstyle/insert.css")
         primaryStage.isResizable = false
 

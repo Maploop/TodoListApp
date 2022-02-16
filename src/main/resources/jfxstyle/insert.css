@@ -13,6 +13,10 @@
     -fx-border-color: lavender;
     -fx-border-width: 2px;
 }
+.big-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
 .combo {
     -fx-background-color: white;
     -fx-text-fill: black;

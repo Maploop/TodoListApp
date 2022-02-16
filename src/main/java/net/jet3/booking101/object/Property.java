@@ -39,6 +39,8 @@ public class Property
     @Getter
     @Setter
     public Priority priority;
+    @Getter
+    public String workspace;
 
     private DataHandler handler;
 
@@ -54,6 +56,8 @@ public class Property
         this.handler = new DataHandler(id.toString());
         this.done = false;
         this.priority = Priority.LOW;
+        if (ManagementYaar.WORKSPACE != null)
+            this.workspace = ManagementYaar.WORKSPACE.name;
 
         PROPERTY_CACHE.put(id, this);
 
@@ -82,6 +86,7 @@ public class Property
         handler.set("notify", notify);
         handler.set("done", done);
         handler.set("priority", priority.name());
+        handler.set("workspace", workspace);
 
         handler.save();
     }
@@ -109,6 +114,8 @@ public class Property
         this.dateToExecute = handler.getLong("dateToExecute");
         this.notify = handler.getBoolean("notify");
         this.priority = Priority.valueOf(handler.getString("priority"));
+        this.workspace = handler.getString("workspace");
+        this.done = handler.getBoolean("done");
     }
 
     public static Property getProperty(UUID id) {
@@ -140,6 +147,7 @@ public class Property
     public boolean delete() {
         PROPERTY_CACHE.remove(this.id);
         ManagementYaar.selectedProperties.remove(this);
+        ManagementYaar.WORKSPACE.properties.remove(this);
         return handler.delete();
     }
 }

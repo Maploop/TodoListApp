@@ -13,6 +13,7 @@ import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.edit.InsertNewUI
+import net.jet3.booking101.ui.edit.NewWorkspaceUI
 import net.jet3.booking101.ui.settings.SettingsUI
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.redo
 import net.jet3.booking101.undoHandler.UndoHandler.Companion.undo
@@ -30,9 +31,18 @@ class MainMenuBar {
 
     fun MainMenuBar() {
         file = Menu("File")
-        val New = MenuItem("New")
-        New.setOnAction {
-            InsertNewUI(1, 1).start();
+        val New = Menu("New")
+
+        val property = MenuItem("Property")
+        val workspace = MenuItem("Workspace")
+
+        New.items.addAll(workspace, property)
+
+        property.setOnAction {
+            InsertNewUI(1, 1).start()
+        }
+        workspace.setOnAction {
+            NewWorkspaceUI().start()
         }
         file!!.items.add(New);
         val Open = MenuItem((Util.get(ApplicationInitalizer.lang, "file") as JSONObject)["open"].toString())

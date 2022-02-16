@@ -1,5 +1,8 @@
 package net.jet3.booking101.initalization;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
+import net.jet3.booking101.data.Workspace;
+import net.jet3.booking101.object.Property;
 import net.jet3.booking101.util.Util;
 import net.jet3.booking101.ManagementYaar;
 
@@ -13,6 +16,7 @@ public class ApplicationInitalizer
     public static File logFile;
     public static File lang;
     public static File tempFile;
+    public static File workspacesFolder;
 
     public static void init() {
         installPath = new File(Util.getAppHome().getAbsolutePath());
@@ -21,6 +25,7 @@ public class ApplicationInitalizer
         logFile = new File(installPath, "log");
         tempFile = new File(installPath, "temp");
         lang = new File(installPath, "lang.json");
+        workspacesFolder = new File(installPath, "workspaces");
 
         if (!installPath.exists()) {
             installPath.mkdirs();
@@ -43,10 +48,27 @@ public class ApplicationInitalizer
                 return;
             }
         }
-        ManagementYaar.LAST_EDITED_PROJECT = Util.getString(configFile, "lastProject");
+        if (!workspacesFolder.exists()) {
+            workspacesFolder.mkdirs();
+        }
+        ManagementYaar.WORKSPACE = Workspace.getWorkspace(Util.getString(configFile, "lastProject"));
         ManagementYaar.WIDTH = Util.getInt(configFile, "width");
         ManagementYaar.HEIGHT = Util.getInt(configFile, "height");
         ManagementYaar.MAXIMIZED = Util.getBoolean(configFile, "maximized");
         ManagementYaar.DEVELOPER_MODE = Util.getBoolean(configFile, "developerMode");
+
+        for (Property property : Property.getAllActions()) {
+            if (property.getWorkspace().equals(ManagementYaar.WORKSPACE.name)) {
+                ManagementYaar.WORKSPACE.properties.add(property);
+            }
+        }
+    }
+
+    public static void updateWorkspace() {
+        for (Property property : Property.getAllActions()) {
+            if (property.getWorkspace().equals(ManagementYaar.WORKSPACE.name)) {
+                ManagementYaar.WORKSPACE.properties.add(property);
+            }
+        }
     }
 }

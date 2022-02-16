@@ -7,17 +7,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import net.jet3.booking101.data.Workspace;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.ui.MainUI;
 import net.jet3.booking101.ui.dev.ApplicationConsole;
-import net.jet3.booking101.util.FXDialogs;
 import net.jet3.booking101.util.Util;
 import net.jet3.booking101.object.Property;
 import net.jet3.booking101.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +25,7 @@ public class ManagementYaar
 
     public ApplicationConsole console;
 
-    public static String LAST_EDITED_PROJECT = "";
+    public static Workspace WORKSPACE = null;
     public static int WIDTH;
     public static int HEIGHT;
     public static boolean MAXIMIZED;
@@ -57,11 +55,13 @@ public class ManagementYaar
     }
 
     public static void exit() {
-        Util.set(ApplicationInitalizer.configFile, "lastEditedProject", LAST_EDITED_PROJECT);
+        Util.set(ApplicationInitalizer.configFile, "lastProject", WORKSPACE.name);
         Util.set(ApplicationInitalizer.configFile, "width", WIDTH);
         Util.set(ApplicationInitalizer.configFile, "height", HEIGHT);
         Util.set(ApplicationInitalizer.configFile, "maximized", MAXIMIZED);
         Util.set(ApplicationInitalizer.configFile, "developerMode", DEVELOPER_MODE);
+
+        ManagementYaar.WORKSPACE.save();
 
         System.exit(0);
     }

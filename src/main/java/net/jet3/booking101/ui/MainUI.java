@@ -73,6 +73,7 @@ public class MainUI extends Application
         });
 
         primaryStage.setMaximized(true);
+        primaryStage.setResizable(false);
 
         scene.setOnKeyReleased(e -> new KeyHandler().handleKeyRelease(e));
         scene.setOnKeyPressed(e -> new KeyHandler().handleKeyPress(e));

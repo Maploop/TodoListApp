@@ -15,7 +15,7 @@ class MainMenuSidebar {
     var projectLabel: Label = Label();
 
     init {
-        projectLabel = Label("Workspace: " + ManagementYaar.LAST_EDITED_PROJECT)
+        projectLabel = Label("Workspace: " + ManagementYaar.WORKSPACE.name)
         projectLabel.styleClass.add("label-project")
         option1?.styleClass?.add("sidebar-btn")
         option1?.maxWidth = 200.0
@@ -28,8 +28,8 @@ class MainMenuSidebar {
 
         option1?.setOnMouseClicked {
             val input =
-                FXDialogs.showTextInput("Rename workspace", "Enter new name", ManagementYaar.LAST_EDITED_PROJECT)
-            ManagementYaar.LAST_EDITED_PROJECT = input
+                FXDialogs.showTextInput("Rename workspace", "Enter new name", ManagementYaar.WORKSPACE.name)
+            ManagementYaar.WORKSPACE.rename(input)
             MainUI().update()
         }
     }
