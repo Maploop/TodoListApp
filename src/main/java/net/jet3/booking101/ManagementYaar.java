@@ -55,6 +55,10 @@ public class ManagementYaar
     }
 
     public static void exit() {
+        System.exit(0);
+    }
+
+    public static void save() {
         Util.set(ApplicationInitalizer.configFile, "lastProject", WORKSPACE.name);
         Util.set(ApplicationInitalizer.configFile, "width", WIDTH);
         Util.set(ApplicationInitalizer.configFile, "height", HEIGHT);
@@ -63,7 +67,9 @@ public class ManagementYaar
 
         ManagementYaar.WORKSPACE.save();
 
-        System.exit(0);
+        for (Property p : Property.getAllActions()) {
+            p.save();
+        }
     }
 
     public static Optional<ButtonType> pop(Alert.AlertType type, String title, String message) {

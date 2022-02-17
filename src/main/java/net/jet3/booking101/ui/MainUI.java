@@ -55,7 +55,7 @@ public class MainUI extends Application
         Scene scene = new Scene(root, xSize, ySize, backgroundColor);
         bar.init(primaryStage, root, scene);
         preview.init(primaryStage, root, scene);
-        primaryStage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon9.png")));
+        primaryStage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon10.png")));
         primaryStage.setScene(scene);
         scene.getStylesheets().add("jfxstyle/main.css");
         sidebar.init(primaryStage, root, scene);
@@ -73,7 +73,6 @@ public class MainUI extends Application
         });
 
         primaryStage.setMaximized(true);
-        primaryStage.setResizable(false);
 
         scene.setOnKeyReleased(e -> new KeyHandler().handleKeyRelease(e));
         scene.setOnKeyPressed(e -> new KeyHandler().handleKeyPress(e));

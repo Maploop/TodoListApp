@@ -13,6 +13,7 @@ import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.ui.edit.EditUI
 import net.jet3.booking101.ui.edit.InsertNewUI
+import net.jet3.booking101.ui.edit.NewWorkspaceUI
 import net.jet3.booking101.util.FXDialogs
 import net.jet3.booking101.util.Log
 import net.jet3.booking101.util.Util
@@ -160,6 +161,40 @@ class MainTasksPreview {
 
         scroll.content = group
         val groupOfScrollBars = Group()
+
+        val newCmenu = ContextMenu()
+        val item1 = Menu("New")
+        val item1_2 = MenuItem("Workspace")
+        item1_2.setOnAction {
+            NewWorkspaceUI().start()
+        }
+        val item1_3 = MenuItem("Property")
+        item1_3.setOnAction {
+            InsertNewUI(1, 1).start()
+        }
+        item1.items.add(item1_2)
+        item1.items.add(item1_3)
+        val save = MenuItem("Save")
+        save.setOnAction {
+            Util.runAsync {
+                ManagementYaar.save()
+            }
+            Toast.success("Save completed!")
+        }
+
+        newCmenu.items.addAll(item1, save)
+
+        scroll.setOnMouseClicked {
+            if (it.button == MouseButton.SECONDARY) {
+                newCmenu.show(scroll, it.screenX, it.screenY)
+            }
+        }
+
+        finished.setOnMouseClicked {
+            if (it.button == MouseButton.SECONDARY) {
+                newCmenu.show(scroll, it.screenX, it.screenY)
+            }
+        }
 
         groupOfScrollBars.children.add(scroll)
         finished.content = finishedGroup
