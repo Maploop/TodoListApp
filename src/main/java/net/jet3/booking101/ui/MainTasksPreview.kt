@@ -76,7 +76,7 @@ class MainTasksPreview {
         finishedGroup.translateY = 25.0
 
         if (!ManagementYaar.WORKSPACE.properties.isEmpty()) {
-            for (property in Property.getAllActions()) {
+            for (property in ManagementYaar.WORKSPACE.properties) {
                 val obj = BorderPane()
 
                 obj.stylesheets.add("/jfxstyle/property.css");
@@ -184,17 +184,17 @@ class MainTasksPreview {
 
         newCmenu.items.addAll(item1, save)
 
-        scroll.setOnMouseClicked {
-            if (it.button == MouseButton.SECONDARY) {
-                newCmenu.show(scroll, it.screenX, it.screenY)
-            }
-        }
-
-        finished.setOnMouseClicked {
-            if (it.button == MouseButton.SECONDARY) {
-                newCmenu.show(scroll, it.screenX, it.screenY)
-            }
-        }
+//        scroll.setOnMouseClicked {
+//            if (it.button == MouseButton.SECONDARY) {
+//                newCmenu.show(scroll, it.screenX, it.screenY)
+//            }
+//        }
+//
+//        finished.setOnMouseClicked {
+//            if (it.button == MouseButton.SECONDARY) {
+//                newCmenu.show(scroll, it.screenX, it.screenY)
+//            }
+//        }
 
         groupOfScrollBars.children.add(scroll)
         finished.content = finishedGroup

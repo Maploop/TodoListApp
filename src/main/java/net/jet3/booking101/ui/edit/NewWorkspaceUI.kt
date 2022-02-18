@@ -13,6 +13,7 @@ import net.jet3.booking101.Toast
 import net.jet3.booking101.`object`.Priority
 import net.jet3.booking101.`object`.Property
 import net.jet3.booking101.`object`.PropertyType
+import net.jet3.booking101.data.Workspace
 import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.MainUI
 import java.time.LocalDateTime
@@ -66,7 +67,16 @@ class NewWorkspaceUI {
         sc.setOnKeyPressed {
             if (it.code == KeyCode.ENTER) {
                 primaryStage.close()
-                Toast.success("pog")
+
+                if (titleField!!.text == "") {
+                    Toast.warn("Please set a title for your workspace!")
+                    return@setOnKeyPressed
+                }
+
+                val space = Workspace(titleField!!.text)
+                space.switchTo()
+
+                Toast.success("Switched to workspace '" + space.name + "'!")
             }
             if (it.code == KeyCode.ESCAPE) {
                 primaryStage.close()

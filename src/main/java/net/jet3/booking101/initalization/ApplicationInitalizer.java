@@ -7,6 +7,7 @@ import net.jet3.booking101.util.Util;
 import net.jet3.booking101.ManagementYaar;
 
 import java.io.File;
+import java.util.List;
 
 public class ApplicationInitalizer
 {
@@ -56,6 +57,7 @@ public class ApplicationInitalizer
         ManagementYaar.HEIGHT = Util.getInt(configFile, "height");
         ManagementYaar.MAXIMIZED = Util.getBoolean(configFile, "maximized");
         ManagementYaar.DEVELOPER_MODE = Util.getBoolean(configFile, "developerMode");
+        ManagementYaar.RECENTS = (List<String>) Util.get(configFile, "recents");
 
         for (Property property : Property.getAllActions()) {
             if (property.getWorkspace().equals(ManagementYaar.WORKSPACE.name)) {

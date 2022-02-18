@@ -1,7 +1,9 @@
 package net.jet3.booking101.data;
 
+import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.object.Property;
+import net.jet3.booking101.ui.MainUI;
 
 import java.io.File;
 import java.util.*;
@@ -10,6 +12,7 @@ import java.util.stream.Collectors;
 public class Workspace
 {
     public static Map<String, Workspace> WORKSPACE_CACHE = new HashMap<>();
+    public static File ROOT_FOLDER = new File(ApplicationInitalizer.installPath + "/workspaces");
 
     public List<Property> properties;
     public String name;
@@ -19,7 +22,7 @@ public class Workspace
     public Workspace(String name) {
         this.name = name;
         this.properties = new ArrayList<>();
-        handler = new DataHandler(new File(ApplicationInitalizer.dataFile + "/workspaces"), name, "mwb");
+        handler = new DataHandler(new File(ApplicationInitalizer.installPath + "/workspaces"), name, "mwb");
 
         WORKSPACE_CACHE.put(name, this);
 
@@ -57,5 +60,24 @@ public class Workspace
         for (Property p : properties)
             p.workspace = newName;
         name = newName;
+    }
+
+    public void switchTo() {
+        ManagementYaar.WORKSPACE.save();
+        ManagementYaar.WORKSPACE = this;
+        if (!ManagementYaar.RECENTS.contains(this.name))
+            ManagementYaar.RECENTS.add(this.name);
+        new MainUI().update();
+    }
+
+    public static Collection<Workspace> getWorkspaces() {
+        return WORKSPACE_CACHE.values();
+    }
+
+    public static void cache() {
+        for (File file : ROOT_FOLDER.listFiles()) {
+            if (!file.isDirectory())
+                getWorkspace(file.getName().replaceAll(".mwb", ""));
+        }
     }
 }

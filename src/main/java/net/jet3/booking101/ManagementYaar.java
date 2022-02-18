@@ -30,6 +30,7 @@ public class ManagementYaar
     public static int HEIGHT;
     public static boolean MAXIMIZED;
     public static boolean DEVELOPER_MODE;
+    public static List<String> RECENTS;
 
     public static List<Property> selectedProperties = new ArrayList<>();
 
@@ -42,6 +43,7 @@ public class ManagementYaar
         Log.info("Loading local data...");
         console = new ApplicationConsole();
         Property.cache();
+        Workspace.cache();
 
         Application.launch(MainUI.class, args);
     }

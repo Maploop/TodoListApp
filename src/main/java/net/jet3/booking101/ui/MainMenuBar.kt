@@ -7,10 +7,13 @@ import javafx.scene.control.Alert
 import javafx.scene.control.Menu
 import javafx.scene.control.MenuBar
 import javafx.scene.control.MenuItem
+import javafx.scene.image.Image
 import javafx.scene.layout.BorderPane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
+import javafx.stage.StageStyle
 import net.jet3.booking101.ManagementYaar
+import net.jet3.booking101.data.Workspace
 import net.jet3.booking101.initalization.ApplicationInitalizer
 import net.jet3.booking101.ui.edit.InsertNewUI
 import net.jet3.booking101.ui.edit.NewWorkspaceUI
@@ -20,9 +23,12 @@ import net.jet3.booking101.undoHandler.UndoHandler.Companion.undo
 import net.jet3.booking101.util.FXDialogs
 import net.jet3.booking101.util.Util
 import org.json.simple.JSONObject
+import java.io.File
 import java.lang.Exception
+import javax.swing.text.html.ImageView
 
 class MainMenuBar {
+    val ico = Menu()
     private var file: Menu? = null
     private var edit: Menu? = null
     private var view: Menu? = null
@@ -30,6 +36,12 @@ class MainMenuBar {
     private var developer: Menu? = null
 
     fun MainMenuBar() {
+        val img = Image(ManagementYaar::class.java.getResourceAsStream("/assets/icon10.png"))
+        val iview = javafx.scene.image.ImageView(img)
+        iview.fitHeight = 20.0
+        iview.fitWidth = 20.0
+        ico.graphic = iview
+        ico.styleClass.add("no")
         file = Menu("File")
         val New = Menu("New")
 
@@ -48,11 +60,23 @@ class MainMenuBar {
         val Open = MenuItem((Util.get(ApplicationInitalizer.lang, "file") as JSONObject)["open"].toString())
         Open.addEventHandler(ActionEvent.ACTION) { e: ActionEvent? ->
             val chooser = FileChooser()
+            chooser.initialDirectory = File(ApplicationInitalizer.installPath, "workspaces")
             val f = chooser.showOpenDialog(null) ?: return@addEventHandler
-            val filename = f.absolutePath
-            println(filename)
+            val key = f.name.replace(".mwb", "")
+            val workspace = Workspace.getWorkspace(key)
+            workspace.switchTo()
+        }
+        val openRecent = Menu("Open Recent")
+        for (str in ManagementYaar.RECENTS) {
+            val menuItem = MenuItem(str)
+            menuItem.setOnAction {
+                val workspace = Workspace.getWorkspace(str)
+                workspace.switchTo()
+            }
+            openRecent.items.add(menuItem)
         }
         file!!.items.add(Open)
+        file!!.items.add(openRecent)
         val Save = MenuItem((Util.get(ApplicationInitalizer.lang, "file") as JSONObject)["save"].toString())
         file!!.items.add(Save)
         val SaveAs = MenuItem((Util.get(ApplicationInitalizer.lang, "file") as JSONObject)["saveAs"].toString())
@@ -86,15 +110,10 @@ class MainMenuBar {
         help = Menu("Help")
         val About = MenuItem((Util.get(ApplicationInitalizer.lang, "help") as JSONObject)["about"].toString())
         About.onAction = EventHandler { e: ActionEvent? ->
-            ManagementYaar.pop(Alert.AlertType.INFORMATION,
-                (Util.get(
-                    ApplicationInitalizer.lang,
-                    "help"
-                ) as JSONObject)["aboutTitle"].toString()
-                        , (Util.get(
-                    ApplicationInitalizer.lang,
-                    "help"
-                ) as JSONObject)["aboutText"].toString())
+            FXDialogs.showInformation((Util.get(
+                ApplicationInitalizer.lang,
+                "help"
+            ) as JSONObject)["aboutText"].toString(), "")
         }
         help!!.items.add(About)
         if (ManagementYaar.DEVELOPER_MODE) {
@@ -109,8 +128,10 @@ class MainMenuBar {
 
     fun init(stage: Stage, root: BorderPane, scene: Scene?) {
         MainMenuBar()
+        root.stylesheets.add("/jfxstyle/bar.css")
         val bar = MenuBar()
         bar.isUseSystemMenuBar = true
+//        bar.menus.add(ico)
         bar.menus.add(file)
         bar.menus.add(edit)
         bar.menus.add(view)
