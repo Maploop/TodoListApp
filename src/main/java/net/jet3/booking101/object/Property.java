@@ -1,9 +1,11 @@
 package net.jet3.booking101.object;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import lombok.Getter;
 import lombok.Setter;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.data.DataHandler;
+import net.jet3.booking101.data.Workspace;
 import net.jet3.booking101.util.Log;
 
 import java.util.*;
@@ -147,7 +149,8 @@ public class Property
     public boolean delete() {
         PROPERTY_CACHE.remove(this.id);
         ManagementYaar.selectedProperties.remove(this);
-        ManagementYaar.WORKSPACE.properties.remove(this);
+        Workspace.getWorkspace(this.workspace).properties.remove(this);
+        Workspace.getWorkspace(this.workspace).save();
         return handler.delete();
     }
 }

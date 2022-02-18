@@ -87,7 +87,7 @@ class MainMenuBar {
         settings.onAction = EventHandler { e: ActionEvent? -> SettingsUI().start() }
         Exit.addEventHandler(
             ActionEvent.ACTION
-        ) { event: ActionEvent? -> ManagementYaar.exit() }
+        ) { event: ActionEvent? -> ManagementYaar.exit(1) }
         file!!.items.add(Exit)
         edit = Menu("Edit")
         val Cut = MenuItem((Util.get(ApplicationInitalizer.lang, "edit") as JSONObject)["cut"].toString())
@@ -121,7 +121,7 @@ class MainMenuBar {
             val appConsole = MenuItem("Application Console")
             developer!!.items.add(appConsole)
             appConsole.setOnAction {
-                FXDialogs.showException("Error!", "An exception has occurred while loading the app.", Exception("HI"))
+                ManagementYaar.getInstance().console.isVisible = true
             }
         }
     }

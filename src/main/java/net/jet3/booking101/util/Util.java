@@ -41,20 +41,16 @@ public class Util
         return Boolean.parseBoolean(getString(file, key));
     }
 
-    public static void set(File file, String key, Object value) {
-        try {
-            FileReader reader = new FileReader(file);
-            JSONObject object = (JSONObject) new JSONParser().parse(reader);
+    public static void set(File file, String key, Object value) throws Exception {
+        FileReader reader = new FileReader(file);
+        JSONObject object = (JSONObject) new JSONParser().parse(reader);
 
-            object.put(key, value);
+        object.put(key, value);
 
-            FileWriter writer = new FileWriter(file);
-            writer.write(object.toJSONString());
-            writer.flush();
-            writer.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        FileWriter writer = new FileWriter(file);
+        writer.write(object.toJSONString());
+        writer.flush();
+        writer.close();
     }
 
     static public String exportResource(String resource, File file) throws IOException {

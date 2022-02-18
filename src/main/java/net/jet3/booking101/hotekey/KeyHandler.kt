@@ -23,7 +23,7 @@ class KeyHandler() {
     }
 
     fun handleKeyPress(e: KeyEvent) {
-        var code = e.code;
+        val code = e.code;
 
         if (code == KeyCode.CONTROL) {
             isControl = true

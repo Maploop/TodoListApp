@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.hotekey.KeyHandler;
 import net.jet3.booking101.util.FXDialogs;
+import net.jet3.booking101.util.Log;
 
 public class MainUI extends Application
 {
@@ -68,7 +69,7 @@ public class MainUI extends Application
         primaryStage.setOnCloseRequest(e -> {
             String response = FXDialogs.showConfirm("Are you sure you want to exit?", "", "Exit", "Cancel");
             if (response.equals("Exit"))
-                ManagementYaar.exit();
+                ManagementYaar.exit(1);
             else
                 e.consume();
         });
@@ -81,6 +82,7 @@ public class MainUI extends Application
     }
 
     public void update() {
+        Log.info("Updating MainUI components...");
         publicRoot.getChildren().clear();
 
         bar.init(publicStage, publicRoot, publicScene);

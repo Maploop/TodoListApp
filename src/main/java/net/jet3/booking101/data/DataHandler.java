@@ -38,7 +38,7 @@ public class DataHandler
                 this.object = (JSONObject) new JSONParser().parse(new FileReader(file));
             } catch (Exception ex) {
                 ex.printStackTrace();
-                ManagementYaar.pop(Alert.AlertType.ERROR, "Error!", "Failed to load one or multiple actions.\n" + ex.getMessage());
+                FXDialogs.showException("An error occurred", "", ex);
             }
         }
         this.file = file;
@@ -54,7 +54,7 @@ public class DataHandler
                 this.object = (JSONObject) new JSONParser().parse(new FileReader(file));
             } catch (Exception ex) {
                 ex.printStackTrace();
-                ManagementYaar.pop(Alert.AlertType.ERROR, "Error!", "Failed to load one or multiple actions.\n" + ex.getMessage());
+                FXDialogs.showException("Failed to load one or multiple actions.", "", ex);
             }
         }
         this.file = file;
@@ -76,7 +76,7 @@ public class DataHandler
             writer.close();
         } catch (Exception ex) {
             ex.printStackTrace();
-            ManagementYaar.pop(Alert.AlertType.ERROR, "Error!", "Failed to create new action.\n" + ex.getMessage());
+            FXDialogs.showException("Failed to create new action.", "", ex);
         }
     }
 
@@ -115,7 +115,7 @@ public class DataHandler
             writer.close();
         } catch (Exception ex) {
             ex.printStackTrace();
-            ManagementYaar.pop(Alert.AlertType.ERROR, "Error!", "Failed to save action.\n" + ex.getMessage());
+            FXDialogs.showException("Failed to save action.", "", ex);
         }
     }
 

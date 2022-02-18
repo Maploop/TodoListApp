@@ -63,7 +63,7 @@ public class Toast {
                 throw new IllegalStateException("Unexpected value: " + toastTyoe);
         }
 
-        Notifications.create().graphic(view).hideAfter(Duration.seconds(1.6)).position(Pos.TOP_RIGHT).title(title).text(text).hideCloseButton().show();
+        Notifications.create().graphic(view).hideAfter(Duration.seconds(1.6)).position(Pos.TOP_RIGHT).title(text).hideCloseButton().show();
     }
 
     public static void success(String msg) {

@@ -1,20 +1,23 @@
 package net.jet3.booking101.util;
 
-import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
 
 public class Log
 {
 
     private static void log(String lvl, Object msg) {
+        String format = "[%s] %s > %s";
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+
         switch (lvl.toLowerCase()) {
             case "info":
-                System.out.println("[INFO] " + msg);
+                System.out.printf((format) + "%n", date, "Information", msg);
                 break;
             case "warning":
-                System.out.println("[WARNING] " + msg);
+                System.out.printf((format) + "%n", date, "Warning", msg);
                 break;
             case "severe":
-                System.err.println("[SEVERE] " + msg);
+                System.err.printf((format) + "%n", date, "Error", msg);
                 break;
         }
     }

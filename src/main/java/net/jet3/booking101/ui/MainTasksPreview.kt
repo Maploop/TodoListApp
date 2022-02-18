@@ -45,7 +45,6 @@ class MainTasksPreview {
         rect.styleClass.add("rect")
         val x = 0.0;
         var y = 0.0;
-        Log.info(Property.getAllActions());
 
         val scroll = ScrollPane(rect)
         scroll.stylesheets.add("/jfxstyle/property.css")
@@ -177,7 +176,11 @@ class MainTasksPreview {
         val save = MenuItem("Save")
         save.setOnAction {
             Util.runAsync {
-                ManagementYaar.save()
+                try {
+                    ManagementYaar.save()
+                } catch (e: Exception) {
+                    FXDialogs.showException("An error occurred while saving", "", e)
+                }
             }
             Toast.success("Save completed!")
         }

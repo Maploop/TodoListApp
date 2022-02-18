@@ -11,6 +11,7 @@ import net.jet3.booking101.data.Workspace;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.ui.MainUI;
 import net.jet3.booking101.ui.dev.ApplicationConsole;
+import net.jet3.booking101.util.FXDialogs;
 import net.jet3.booking101.util.Util;
 import net.jet3.booking101.object.Property;
 import net.jet3.booking101.util.Log;
@@ -56,11 +57,21 @@ public class ManagementYaar
         new ManagementYaar(args);
     }
 
-    public static void exit() {
-        System.exit(0);
+    public static void exit(int c) {
+        Log.info("Exiting with code " + c);
+        Log.info("Saving data...");
+        try {
+            ManagementYaar.save();
+        } catch (Exception ex) {
+            Log.error("An error occurred while performing a full save!");
+            Log.error(ex);
+            FXDialogs.showException("An error occurred while saving", "", ex);
+        }
+
+        System.exit(c);
     }
 
-    public static void save() {
+    public static void save() throws Exception {
         Util.set(ApplicationInitalizer.configFile, "lastProject", WORKSPACE.name);
         Util.set(ApplicationInitalizer.configFile, "width", WIDTH);
         Util.set(ApplicationInitalizer.configFile, "height", HEIGHT);
@@ -72,6 +83,8 @@ public class ManagementYaar
         for (Property p : Property.getAllActions()) {
             p.save();
         }
+
+        Log.info("Successfully saved all data.");
     }
 
     public static Optional<ButtonType> pop(Alert.AlertType type, String title, String message) {

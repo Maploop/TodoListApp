@@ -1,5 +1,6 @@
 package net.jet3.booking101.ui.dev
 
+import net.jet3.booking101.Toast
 import net.jet3.booking101.component.Console
 import net.jet3.booking101.component.ConsoleBottomBar
 import java.awt.BorderLayout
@@ -18,7 +19,10 @@ class ApplicationConsole : JFrame("AppConsole") {
     fun setupContextMenu() {
         contextmenu = JPopupMenu()
         copy = JMenuItem("Copy")
-        copy!!.addActionListener { e: ActionEvent? -> console.copy() }
+        copy!!.addActionListener {
+            console.copy()
+            Toast.success("Copied console to clipboard")
+        }
         contextmenu!!.add(copy)
         console.addMouseListener(object : MouseAdapter() {
             override fun mousePressed(e: MouseEvent) {
@@ -64,5 +68,13 @@ class ApplicationConsole : JFrame("AppConsole") {
                 bottomBar.setLocation(0, console.getHeight())
             }
         })
+    }
+
+    override fun setVisible(b: Boolean) {
+        super.setVisible(b)
+        if (b) {
+            console.requestFocus()
+            console.update(console.graphics)
+        }
     }
 }
