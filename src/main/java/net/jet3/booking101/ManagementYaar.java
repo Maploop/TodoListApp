@@ -1,5 +1,6 @@
 package net.jet3.booking101;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -74,7 +75,7 @@ public class ManagementYaar
         SystemTray tray = SystemTray.getSystemTray();
         java.awt.Image image = null;
         try {
-            image = ImageIO.read(new URL("https://github.com/Maploop/CentServices/releases/download/icon9/icon3.png"));
+            image = ImageIO.read(new URL("https://github.com/Maploop/CentServices/releases/download/icon9/icon99.png"));
         } catch (Exception ex) {
             ex.printStackTrace();
             FXDialogs.showException("An error occurred while creating the tray icon", "", ex);
@@ -91,7 +92,7 @@ public class ManagementYaar
         showItem.addActionListener(showLIstener);
         popup.add(showItem);
 
-        MenuItem closeItem = new MenuItem("Close");
+        MenuItem closeItem = new MenuItem("Exit");
         closeItem.addActionListener(e -> {
             Platform.runLater(() -> {
                 exit(1);
@@ -181,7 +182,7 @@ public class ManagementYaar
         dialog.setScene(sc);
         dialog.setTitle(title);
         try {
-            dialog.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon3.png")));
+            dialog.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon99.png")));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

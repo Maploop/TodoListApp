@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -149,6 +150,18 @@ public class DataHandler
 
     public static Property get(int row, int col) {
         return Property.getAllActions().stream().filter((property) -> property.column == col && property.row == row).collect(Collectors.toList()).get(0);
+    }
+
+    public String getPath() {
+        StringBuilder builder = new StringBuilder();
+        String[] array = file.toString().split("\\\\");
+        for (int i = 0; i < array.length - 1; i++) {
+            if (i >= 4) {
+                builder.append(array[i]);
+                builder.append("/");
+            }
+        }
+        return builder.toString();
     }
 
     public void rename(String newName) {

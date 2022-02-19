@@ -2,14 +2,15 @@ package net.jet3.booking101.ui
 
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
-import javafx.scene.Group
 import javafx.scene.Scene
-import javafx.scene.control.*
+import javafx.scene.control.Button
+import javafx.scene.control.Menu
+import javafx.scene.control.MenuBar
+import javafx.scene.control.MenuItem
 import javafx.scene.image.Image
 import javafx.scene.layout.BorderPane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
-import javafx.stage.StageStyle
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.data.Workspace
 import net.jet3.booking101.initalization.ApplicationInitalizer
@@ -23,8 +24,6 @@ import net.jet3.booking101.util.Util
 import org.json.simple.JSONObject
 import java.awt.TrayIcon
 import java.io.File
-import java.lang.Exception
-import javax.swing.text.html.ImageView
 
 class MainMenuBar {
     val ico = Menu()
@@ -35,7 +34,7 @@ class MainMenuBar {
     private var developer: Menu? = null
 
     fun MainMenuBar() {
-        val img = Image(ManagementYaar::class.java.getResourceAsStream("/assets/icon3.png"))
+        val img = Image(ManagementYaar::class.java.getResourceAsStream("/assets/icon99.png"))
         val iview = javafx.scene.image.ImageView(img)
         iview.fitHeight = 20.0
         iview.fitWidth = 20.0
@@ -86,7 +85,12 @@ class MainMenuBar {
         settings.onAction = EventHandler { e: ActionEvent? -> SettingsUI().start() }
         Exit.addEventHandler(
             ActionEvent.ACTION
-        ) { event: ActionEvent? -> ManagementYaar.exit(1) }
+        ) {
+            run {
+                ManagementYaar.WORKSPACE = Workspace.getWorkspace("A New Look")
+                MainUI().update()
+            }
+        }
         file!!.items.add(Exit)
         edit = Menu("Edit")
         val Cut = MenuItem((Util.get(ApplicationInitalizer.lang, "edit") as JSONObject)["cut"].toString())

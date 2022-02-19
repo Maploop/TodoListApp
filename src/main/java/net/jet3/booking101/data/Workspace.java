@@ -1,5 +1,6 @@
 package net.jet3.booking101.data;
 
+import lombok.Getter;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.object.Property;
@@ -17,6 +18,7 @@ public class Workspace
     public List<Property> properties;
     public String name;
 
+    @Getter
     private DataHandler handler;
 
     public Workspace(String name) {

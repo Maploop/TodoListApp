@@ -29,3 +29,35 @@
 .bar {
     -fx-background-color: #cccccc;
 }
+.list-item-title {
+    -fx-font-size: 24px;
+    -fx-text-fill: black;
+}
+.list-title {
+    -fx-font-size: 24px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+.list-item-description {
+    -fx-font-size: 16px;
+    -fx-text-fill: gray;
+}
+.list-root {
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+.list-item {
+    -fx-background-color: white;
+    -fx-border-color: #000033;
+    -fx-text-fill: black;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+.list-item:hover {
+    -fx-background-color: #cccccc;
+    -fx-border-color: #000033;
+    -fx-text-fill: black;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+    -fx-cursor: hand;
+}

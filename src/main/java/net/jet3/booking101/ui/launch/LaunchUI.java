@@ -7,10 +7,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.jet3.booking101.ManagementYaar;
+import net.jet3.booking101.Toast;
+import net.jet3.booking101.data.Workspace;
+import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.ui.edit.NewWorkspaceUI;
+
+import java.io.File;
 
 public class LaunchUI
 {
@@ -53,7 +59,7 @@ public class LaunchUI
 
         // Logo
         logoLabel = new Label("ManagementYaar");
-        ImageView view = new ImageView("/assets/icon3.png");
+        ImageView view = new ImageView("/assets/icon99.png");
         view.setFitHeight(70);
         view.setFitWidth(70);
         logoLabel.setGraphic(view);
@@ -70,16 +76,29 @@ public class LaunchUI
                 return;
             new NewWorkspaceUI().start();
         });
+        openWorkspace = new Label("Open Workspace");
+        openWorkspace.getStyleClass().add("clickable-label");
+        openWorkspace.setOnMouseClicked(event -> {
+            FileChooser  chooser = new FileChooser();
+            chooser.setInitialDirectory(new File(ApplicationInitalizer.installPath, "workspaces"));
+            File file = chooser.showOpenDialog(null);
+            if (!file.getName().endsWith(".mwb")) {
+                Toast.error("Please select a .mwb file!");
+                return;
+            }
+                    String key = file.getName().replace(".mwb", "");
+            Workspace workspace = Workspace.getWorkspace(key);
+            workspace.switchTo();
+        });
+        openWorkspace.setTranslateY(50);
     }
 
     public void init(Stage primaryStage, Scene scene, BorderPane root) {
-        primaryStage.initStyle(StageStyle.UNDECORATED);
         initalizeComponents();
         primaryStage.setWidth(1000);
         primaryStage.setMaxWidth(1000);
-        root.setTop(editorRoot);
 
-        center.getChildren().add(newWorkspace);
+        center.getChildren().addAll(newWorkspace, openWorkspace);
 
         leftRoot.setTop(logoLabel);
         leftRoot.setCenter(center);
@@ -88,6 +107,9 @@ public class LaunchUI
         editorRoot.setLeft(leftRoot);
         editorRoot.setRight(rightRoot);
 
+        new WorkspaceList().init(primaryStage, scene, editorRoot);
+
+        root.setTop(editorRoot);
         primaryStage.setScene(scene);
     }
 

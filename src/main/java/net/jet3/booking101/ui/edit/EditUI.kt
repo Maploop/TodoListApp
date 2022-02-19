@@ -37,7 +37,7 @@ class EditUI(var property: Property) {
 
         primaryStage.scene = scene
 
-        primaryStage.icons.add(Image(ManagementYaar::class.java.classLoader.getResourceAsStream("assets/icon3.png")))
+        primaryStage.icons.add(Image(ManagementYaar::class.java.classLoader.getResourceAsStream("assets/icon99.png")))
         primaryStage.isResizable = false
         primaryStage.show()
     }
