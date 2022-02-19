@@ -34,7 +34,7 @@ class MainMenuBar {
     private var developer: Menu? = null
 
     fun MainMenuBar() {
-        val img = Image(ManagementYaar::class.java.getResourceAsStream("/assets/icon10.png"))
+        val img = Image(ManagementYaar::class.java.getResourceAsStream("/assets/icon3.png"))
         val iview = javafx.scene.image.ImageView(img)
         iview.fitHeight = 20.0
         iview.fitWidth = 20.0

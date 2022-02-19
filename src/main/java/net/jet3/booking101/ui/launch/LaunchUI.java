@@ -53,7 +53,7 @@ public class LaunchUI
 
         // Logo
         logoLabel = new Label("ManagementYaar");
-        ImageView view = new ImageView("/assets/icon9.png");
+        ImageView view = new ImageView("/assets/icon3.png");
         view.setFitHeight(70);
         view.setFitWidth(70);
         logoLabel.setGraphic(view);

@@ -7,6 +7,7 @@ import javafx.scene.control.*
 import javafx.scene.input.MouseButton
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
+import javafx.scene.text.TextAlignment
 import javafx.stage.Stage
 import net.jet3.booking101.ManagementYaar
 import net.jet3.booking101.Toast
@@ -17,6 +18,8 @@ import net.jet3.booking101.ui.edit.NewWorkspaceUI
 import net.jet3.booking101.util.FXDialogs
 import net.jet3.booking101.util.Log
 import net.jet3.booking101.util.Util
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainTasksPreview {
     private var root: StackPane? = null
@@ -125,8 +128,13 @@ class MainTasksPreview {
                 obj.translateY = y;
                 obj.styleClass.add("parent")
                 val label = Label(property.title)
+                if (property.dateToExecute != (-1).toLong()) {
+                    val date = Date(property.dateToExecute)
+                    label.text = "${property.title}\n${SimpleDateFormat("dd/MM/hh").format(date)}"
+                }
                 label.translateX = -10.0
                 label.styleClass.add("title")
+                label.textAlignment = TextAlignment.CENTER
 
                 if (property.done) {
                     obj.styleClass.add("done")

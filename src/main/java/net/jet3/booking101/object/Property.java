@@ -52,7 +52,7 @@ public class Property
         this.title = "No title";
         this.type = PropertyType.TASK;
         this.description = "No description";
-        this.dateToExecute = System.currentTimeMillis();
+        this.dateToExecute = -1;
         this.notify = false;
         this.handler = new DataHandler(id.toString());
         this.done = false;

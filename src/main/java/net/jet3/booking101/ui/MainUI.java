@@ -19,8 +19,8 @@ public class MainUI extends Application
 {
     // Set window size, color, window label
     private final String windowLabel = "Management Yaar";
-    private final int xSize = ManagementYaar.WIDTH;
-    private final int ySize = ManagementYaar.HEIGHT;
+    private final int xSize = 1200;
+    private final int ySize = 650;
     private final Color backgroundColor = Color.WHITE;
 
     private MainMenuBar bar;
@@ -69,7 +69,7 @@ public class MainUI extends Application
             setupProjectMenu(stage, root, scene);
         }
 
-        stage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon10.png")));
+        stage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon3.png")));
         stage.setScene(scene);
 
         stage.setOnCloseRequest(e -> {
@@ -88,6 +88,8 @@ public class MainUI extends Application
     }
 
     private void setupProjectMenu(Stage primaryStage, BorderPane root, Scene scene) {
+        primaryStage.setWidth(xSize);
+        primaryStage.setHeight(ySize);
         bar.init(primaryStage, root, scene);
         preview.init(primaryStage, root, scene);
         sidebar.init(primaryStage, root, scene);

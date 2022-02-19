@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import net.jet3.booking101.data.Workspace;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
@@ -43,6 +44,7 @@ public class ManagementYaar
     public static List<String> RECENTS;
 
     public static TrayIcon trayIcon;
+    public static Font font;
 
     public static List<Property> selectedProperties = new ArrayList<>();
 
@@ -57,7 +59,13 @@ public class ManagementYaar
         console = new ApplicationConsole();
         Property.cache();
         Workspace.cache();
-        makeTrayIcon();
+        Util.runAsync(this::makeTrayIcon);
+        try {
+            font = javafx.scene.text.Font.loadFont("file:resources/assets/myrad.otf", 24);
+        } catch (Exception ex) {
+            System.out.println("Font not found");
+            FXDialogs.showException("Font not found", "", ex);
+        }
 
         Application.launch(MainUI.class, args);
     }

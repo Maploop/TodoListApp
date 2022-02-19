@@ -27,15 +27,15 @@
 .total {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #0076a3;
+    -fx-text-fill: #999900;
 }
 .done {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #0076a3;
+    -fx-text-fill: #006600;
 }
 .remaining {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #0076a3;
+    -fx-text-fill: #660000;
 }
