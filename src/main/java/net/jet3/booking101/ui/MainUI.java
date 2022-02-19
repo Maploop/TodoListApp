@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.hotekey.KeyHandler;
+import net.jet3.booking101.ui.launch.LaunchUI;
 import net.jet3.booking101.util.FXDialogs;
 import net.jet3.booking101.util.Log;
 
@@ -49,45 +50,61 @@ public class MainUI extends Application
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle(windowLabel);
+        calc(primaryStage);
+    }
 
+    private void calc(Stage stage) {
+        stage.setTitle("Management Yaar");
+        stage.setMaximized(true);
         BorderPane root = new BorderPane();
-        root.getStylesheets().add("jfxstyle/main.css");
+        root.getStylesheets().add("jfxstyle/launch.css");
         root.getStyleClass().add("root");
         Scene scene = new Scene(root, xSize, ySize, backgroundColor);
-        bar.init(primaryStage, root, scene);
-        preview.init(primaryStage, root, scene);
-        primaryStage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon10.png")));
-        primaryStage.setScene(scene);
-        scene.getStylesheets().add("jfxstyle/main.css");
-        sidebar.init(primaryStage, root, scene);
 
-        publicRoot = root;
-        publicScene = scene;
-        publicStage = primaryStage;
+        if (ManagementYaar.WORKSPACE.name.equalsIgnoreCase("A New Look")) {
+            setupLaunchMenu(stage, root, scene);
+        } else {
+            setupProjectMenu(stage, root, scene);
+        }
 
-        primaryStage.setOnCloseRequest(e -> {
+        stage.getIcons().add(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/icon10.png")));
+        stage.setScene(scene);
+
+        stage.setOnCloseRequest(e -> {
             String response = FXDialogs.showConfirm("Are you sure you want to exit?", "", "Exit", "Cancel");
             if (response.equals("Exit"))
                 ManagementYaar.exit(1);
             else
                 e.consume();
         });
-
-        primaryStage.setMaximized(true);
-
         scene.setOnKeyReleased(e -> new KeyHandler().handleKeyRelease(e));
         scene.setOnKeyPressed(e -> new KeyHandler().handleKeyPress(e));
+
+        publicRoot = root;
+        publicScene = scene;
+        publicStage = stage;
+    }
+
+    private void setupProjectMenu(Stage primaryStage, BorderPane root, Scene scene) {
+        bar.init(primaryStage, root, scene);
+        preview.init(primaryStage, root, scene);
+        sidebar.init(primaryStage, root, scene);
+
+        primaryStage.show();
+    }
+
+    private void setupLaunchMenu(Stage primaryStage, BorderPane root, Scene scene) {
+        new LaunchUI(new String[] {"-dead"}).init(primaryStage, scene, root);
+
+        primaryStage.setMaximized(false);
+        primaryStage.setResizable(false);
+
         primaryStage.show();
     }
 
     public void update() {
         Log.info("Updating MainUI components...");
         publicRoot.getChildren().clear();
-
-        bar.init(publicStage, publicRoot, publicScene);
-        sidebar.init(publicStage, publicRoot, publicScene);
-        preview.init(publicStage, publicRoot, publicScene);
-        publicStage.show();
+        calc(publicStage);
     }
 }

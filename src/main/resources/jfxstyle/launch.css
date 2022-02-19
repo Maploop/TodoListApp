@@ -1,0 +1,29 @@
+.side-left {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000033, #320033);
+}
+.clickable-label {
+    -fx-text-fill: pink;
+    -fx-font-size: 20px;
+    -fx-cursor: hand;
+}
+.clickable-label:hover {
+    -fx-text-fill: white;
+}
+.close {
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+.normal-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.close:hover {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}

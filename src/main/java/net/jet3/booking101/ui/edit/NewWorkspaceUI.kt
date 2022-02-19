@@ -21,6 +21,10 @@ import java.time.ZoneOffset
 import java.util.*
 
 class NewWorkspaceUI {
+    companion object {
+        var open = false
+    }
+
     var titleField: TextField? = null
     var label: Label? = null
     var l1: Label? = null
@@ -55,6 +59,7 @@ class NewWorkspaceUI {
     }
 
     fun start() {
+        open = true
         val primaryStage = Stage()
         primaryStage.initOwner(MainUI.publicScene.window)
         primaryStage.initStyle(StageStyle.UNDECORATED)
@@ -79,6 +84,7 @@ class NewWorkspaceUI {
                 Toast.success("Switched to workspace '" + space.name + "'!")
             }
             if (it.code == KeyCode.ESCAPE) {
+                open = false
                 primaryStage.close()
             }
         }

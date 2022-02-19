@@ -37,7 +37,6 @@ class MainMenuSidebar {
     fun init(stage: Stage, root: BorderPane, scene: Scene) {
         scene.stylesheets.add("/jfxstyle/sidebar.css")
 
-        editorRoot!!.children.add(option1)
         editorRoot!!.children.add(projectLabel)
         root.left = editorRoot;
 

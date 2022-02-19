@@ -59,6 +59,7 @@ public class ManagementYaar
 
     public static void exit(int c) {
         Log.info("Exiting with code " + c);
+        MainUI.publicStage.close();
         Log.info("Saving data...");
         try {
             ManagementYaar.save();
