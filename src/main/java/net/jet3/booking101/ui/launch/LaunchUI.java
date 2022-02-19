@@ -34,6 +34,7 @@ public class LaunchUI
         leftRoot = new BorderPane();
         rightRoot = new BorderPane();
         center = new Group();
+        bottom = new Group();
         editorRoot.getStylesheets().add("/jfxstyle/launch.css");
         leftRoot.getStylesheets().add("/jfxstyle/launch.css");
         rightRoot.getStylesheets().add("/jfxstyle/launch.css");
@@ -113,9 +114,11 @@ public class LaunchUI
         primaryStage.setMaxWidth(1000);
 
         center.getChildren().addAll(newWorkspace, openWorkspace);
+        bottom.getChildren().addAll(settings);
 
         leftRoot.setTop(logoLabel);
         leftRoot.setCenter(center);
+        rightRoot.setBottom(bottom);
         rightRoot.setTop(close);
 
         editorRoot.setLeft(leftRoot);
@@ -132,6 +135,7 @@ public class LaunchUI
     private BorderPane rightRoot;
 
     private Group center;
+    private Group bottom;
 
     private Label logoLabel;
     private Label newWorkspace;

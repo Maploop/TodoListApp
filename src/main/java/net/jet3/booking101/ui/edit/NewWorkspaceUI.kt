@@ -82,6 +82,7 @@ class NewWorkspaceUI {
                 space.switchTo()
 
                 Toast.success("Switched to workspace '" + space.name + "'!")
+                open = false
             }
             if (it.code == KeyCode.ESCAPE) {
                 open = false

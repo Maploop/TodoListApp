@@ -1,5 +1,5 @@
 .side-left {
-    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000033, #320033);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #000033, #320033);
 }
 .clickable-label {
     -fx-text-fill: pink;
