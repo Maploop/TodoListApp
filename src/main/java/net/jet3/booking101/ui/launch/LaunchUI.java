@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -15,6 +16,7 @@ import net.jet3.booking101.Toast;
 import net.jet3.booking101.data.Workspace;
 import net.jet3.booking101.initalization.ApplicationInitalizer;
 import net.jet3.booking101.ui.edit.NewWorkspaceUI;
+import net.jet3.booking101.ui.settings.SettingsUI;
 
 import java.io.File;
 
@@ -91,6 +93,18 @@ public class LaunchUI
             workspace.switchTo();
         });
         openWorkspace.setTranslateY(50);
+
+        settings = new Label();
+        settings.getStyleClass().add("clickable-label");
+        settings.setOnMouseClicked(event -> {
+            new SettingsUI().start();
+        });
+        ImageView v = new ImageView(new Image(ManagementYaar.class.getClassLoader().getResourceAsStream("assets/settings.png")));
+        v.setFitHeight(40);
+        v.setFitWidth(50);
+        settings.setTranslateX(-10);
+        settings.setTranslateY(350);
+        settings.setGraphic(v);
     }
 
     public void init(Stage primaryStage, Scene scene, BorderPane root) {
@@ -123,4 +137,6 @@ public class LaunchUI
     private Label newWorkspace;
     private Button close;
     private Label openWorkspace;
+    private Label settings;
+    private Label info;
 }
