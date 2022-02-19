@@ -1,6 +1,5 @@
 package net.jet3.booking101.initalization;
 
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import net.jet3.booking101.data.Workspace;
 import net.jet3.booking101.object.Property;
 import net.jet3.booking101.util.Util;
@@ -12,7 +11,7 @@ import java.util.List;
 public class ApplicationInitalizer
 {
     public static File installPath;
-    public static File configFile;
+    public static  File configFile;
     public static File dataFile;
     public static File logFile;
     public static File lang;

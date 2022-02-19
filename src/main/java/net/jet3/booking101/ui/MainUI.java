@@ -12,7 +12,6 @@ import javafx.stage.StageStyle;
 import net.jet3.booking101.ManagementYaar;
 import net.jet3.booking101.hotekey.KeyHandler;
 import net.jet3.booking101.ui.launch.LaunchUI;
-import net.jet3.booking101.ui.launch.WorkspaceList;
 import net.jet3.booking101.util.FXDialogs;
 import net.jet3.booking101.util.Log;
 
@@ -99,8 +98,10 @@ public class MainUI extends Application
     }
 
     private void setupLaunchMenu(Stage primaryStage, BorderPane root, Scene scene) {
-        new WorkspaceList().init(primaryStage, scene, root);
         new LaunchUI(new String[] {"-dead"}).init(primaryStage, scene, root);
+
+        primaryStage.setMaximized(false);
+        primaryStage.setResizable(false);
 
         primaryStage.show();
     }

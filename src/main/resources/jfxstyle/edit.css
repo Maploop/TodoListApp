@@ -2,7 +2,7 @@
         -fx-font-size: 14px;
 }
 .buttons {
-    -fx-background-color: lavender;
+    -fx-background-color: #FFFFFF;
     -fx-text-fill: black;
     -fx-border-radius: 10 10 10 10;
     -fx-background-radius: 10 10 10 10;
@@ -22,16 +22,16 @@
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-font-size: 14px;
-    -fx-border-color: lavender;
+    -fx-border-color: ;
     -fx-border-width: 2px;
 }
-.errored {
+.errored {lavender
     -fx-border-color: red;
 }
 .check-box {
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-font-size: 14px;
-    -fx-border-color: lavender;
+    -fx-border-color: #8A0000;
     -fx-border-width: 2px;
 }

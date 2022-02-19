@@ -1,5 +1,4 @@
 package net.jet3.booking101.component
-
 class AppConsole {
     var text: String
 
