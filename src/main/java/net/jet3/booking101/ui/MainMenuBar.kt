@@ -21,6 +21,7 @@ import net.jet3.booking101.undoHandler.UndoHandler.Companion.undo
 import net.jet3.booking101.util.FXDialogs
 import net.jet3.booking101.util.Util
 import org.json.simple.JSONObject
+import java.awt.TrayIcon
 import java.io.File
 import java.lang.Exception
 import javax.swing.text.html.ImageView
@@ -149,6 +150,7 @@ class MainMenuBar {
         hide.setMaxSize(60.0, 30.0)
         hide.translateX = -68.0
         hide.setOnMouseClicked {
+            ManagementYaar.trayIcon.displayMessage("Management Yaar", "Management Yaar is now hidden in your tray bar!", TrayIcon.MessageType.INFO)
             ManagementYaar.hide()
         }
         g1.right = leftBar

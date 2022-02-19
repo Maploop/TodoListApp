@@ -74,7 +74,7 @@ public class ManagementYaar
         SystemTray tray = SystemTray.getSystemTray();
         java.awt.Image image = null;
         try {
-            image = ImageIO.read(new URL("https://github.com/Maploop/CentServices/releases/download/icon9/icon9.png"));
+            image = ImageIO.read(new URL("https://github.com/Maploop/CentServices/releases/download/icon9/icon3.png"));
         } catch (Exception ex) {
             ex.printStackTrace();
             FXDialogs.showException("An error occurred while creating the tray icon", "", ex);
@@ -100,7 +100,9 @@ public class ManagementYaar
         popup.add(closeItem);
 
         assert image != null;
-        trayIcon = new TrayIcon(image, "Tray", popup);
+        trayIcon = new TrayIcon(image, "Management Yaar v1.0", popup);
+        trayIcon.addActionListener(showLIstener);
+        trayIcon.setImageAutoSize(true);
 
         try {
             tray.add(trayIcon);
