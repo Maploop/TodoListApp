@@ -3,3 +3,6 @@
     -fx-font-weight: bold;
     -fx-text-fill: #0076a3;
 }
+.root {
+    -fx-background-color: #CCCCCC
+}

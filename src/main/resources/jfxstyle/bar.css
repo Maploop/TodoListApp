@@ -1,3 +1,29 @@
 .no:hover {
     -fx-background-color: white;
 }
+.close {
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+.close:hover {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+.hide {
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+.hide:hover {
+    -fx-background-color: lightblue;
+    -fx-text-fill: white;
+}

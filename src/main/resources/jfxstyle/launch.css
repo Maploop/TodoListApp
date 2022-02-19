@@ -15,7 +15,6 @@
     -fx-font-weight: bold;
     -fx-border-width: 2px;
     -fx-background-color: transparent;
-    -fx-background-radius: 5px;
     -fx-padding: 5px;
 }
 .normal-label {
@@ -26,4 +25,7 @@
 .close:hover {
     -fx-background-color: red;
     -fx-text-fill: white;
+}
+.bar {
+    -fx-background-color: white;
 }

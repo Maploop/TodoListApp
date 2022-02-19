@@ -24,7 +24,7 @@ class MainTasksPreview {
     var rows = 30
     var columns = 12
     var width = 1500.0
-    var height = 900.0
+    var height = 600.0
 
     private var contextMenu: ContextMenu? = null
     private var insertNew: MenuItem? = null
@@ -49,21 +49,21 @@ class MainTasksPreview {
         val scroll = ScrollPane(rect)
         scroll.stylesheets.add("/jfxstyle/property.css")
         scroll.styleClass.add("column")
-        scroll.prefWidth = 500.0
-        scroll.maxWidth = 500.0
+        scroll.prefWidth = 300.0
+        scroll.maxWidth = 300.0
         scroll.maxHeight = height
         scroll.prefHeight = height
-        scroll.translateX = 0.0
+        scroll.translateX = 300.0
 
         val finished = ScrollPane(rect)
         finished.stylesheets.add("/jfxstyle/property.css")
         finished.styleClass.add("column")
-        finished.prefWidth = 500.0
-        finished.maxWidth = 500.0
+        finished.prefWidth = 300.0
+        finished.maxWidth = 300.0
         finished.maxHeight = height
         finished.prefHeight = height
         finished.minHeight = height
-        finished.translateX = 550.0
+        finished.translateX = 650.0
 
 
         val group = Group()
@@ -124,19 +124,21 @@ class MainTasksPreview {
                 obj.translateX = x;
                 obj.translateY = y;
                 obj.styleClass.add("parent")
+                val label = Label(property.title)
+                label.translateX = -10.0
+                label.styleClass.add("title")
+
                 if (property.done) {
                     obj.styleClass.add("done")
                 } else {
                     obj.styleClass.add("undone")
                 }
 
-                val label = Label(property.title)
-                label.translateX = -10.0
-                label.styleClass.add("title")
+
                 obj.center = label;
-                obj.setPrefSize(450.0, 60.0)
-                obj.setMaxSize(450.0, 60.0)
-                obj.setMinSize(450.0, 60.0)
+                obj.setPrefSize(250.0, 60.0)
+                obj.setMaxSize(250.0, 60.0)
+                obj.setMinSize(250.0, 60.0)
 
                 y += 80.0
 
@@ -202,7 +204,7 @@ class MainTasksPreview {
         groupOfScrollBars.children.add(scroll)
         finished.content = finishedGroup
         groupOfScrollBars.children.add(finished)
-        groupOfScrollBars.translateX = -300.0
+        groupOfScrollBars.translateX = -100.0
         root.center = groupOfScrollBars
 
         stage.scene = scene

@@ -70,6 +70,14 @@ public class Workspace
         new MainUI().update();
     }
 
+    public int getTotal() {
+        return properties.size();
+    }
+
+    public int getDone() {
+        return (int) properties.stream().filter(Property::isDone).count();
+    }
+
     public static Collection<Workspace> getWorkspaces() {
         return WORKSPACE_CACHE.values();
     }

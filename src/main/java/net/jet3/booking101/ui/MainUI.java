@@ -50,14 +50,16 @@ public class MainUI extends Application
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         calc(primaryStage);
     }
 
     private void calc(Stage stage) {
         stage.setTitle("Management Yaar");
-        stage.setMaximized(true);
+        stage.setMaximized(false);
         BorderPane root = new BorderPane();
         root.getStylesheets().add("jfxstyle/launch.css");
+        root.getStylesheets().add("jfxstyle/main.css");
         root.getStyleClass().add("root");
         Scene scene = new Scene(root, xSize, ySize, backgroundColor);
 

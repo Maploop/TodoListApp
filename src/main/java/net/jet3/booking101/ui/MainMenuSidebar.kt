@@ -13,25 +13,22 @@ class MainMenuSidebar {
     var option1: Button? = Button("Rename")
     var editorRoot: AnchorPane? = AnchorPane()
     var projectLabel: Label = Label();
+    var total = Label()
+    var done = Label()
+    var remaining = Label()
+
 
     init {
-        projectLabel = Label("Workspace: " + ManagementYaar.WORKSPACE.name)
+        projectLabel = Label(ManagementYaar.WORKSPACE.name)
         projectLabel.styleClass.add("label-project")
         option1?.styleClass?.add("sidebar-btn")
-        option1?.maxWidth = 200.0
-        option1?.minWidth = 200.0
-        option1?.maxHeight = 50.0
-        option1?.minHeight = 50.0
 
-        option1?.translateX = 10.0;
-        option1?.translateY = 50.0;
-
-        option1?.setOnMouseClicked {
-            val input =
-                FXDialogs.showTextInput("Rename workspace", "Enter new name", ManagementYaar.WORKSPACE.name)
-            ManagementYaar.WORKSPACE.rename(input)
-            MainUI().update()
-        }
+        total.text = "Total: " + ManagementYaar.WORKSPACE.total
+        done.text = "Done: " + ManagementYaar.WORKSPACE.done
+        remaining.text = "Remaining: " +( ManagementYaar.WORKSPACE.total - ManagementYaar.WORKSPACE.done)
+        total.styleClass.add("total")
+        done.styleClass.add("done")
+        remaining.styleClass.add("remaining")
     }
 
     fun init(stage: Stage, root: BorderPane, scene: Scene) {

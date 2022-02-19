@@ -2,11 +2,9 @@ package net.jet3.booking101.ui
 
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
+import javafx.scene.Group
 import javafx.scene.Scene
-import javafx.scene.control.Alert
-import javafx.scene.control.Menu
-import javafx.scene.control.MenuBar
-import javafx.scene.control.MenuItem
+import javafx.scene.control.*
 import javafx.scene.image.Image
 import javafx.scene.layout.BorderPane
 import javafx.stage.FileChooser
@@ -129,15 +127,47 @@ class MainMenuBar {
     fun init(stage: Stage, root: BorderPane, scene: Scene?) {
         MainMenuBar()
         root.stylesheets.add("/jfxstyle/bar.css")
+        val g = BorderPane()
         val bar = MenuBar()
+        bar.styleClass.add("bar")
+        ico.styleClass.add("no")
+        val g1 = BorderPane()
+        val leftBar = Button("X")
+        leftBar.setPrefSize(60.0, 30.0)
+        leftBar.setMinSize(60.0, 30.0)
+        leftBar.setMaxSize(60.0, 30.0)
+        leftBar.translateX = -68.0
+        leftBar.styleClass.add("close")
+        leftBar.setOnMouseClicked {
+            ManagementYaar.exit(1)
+        }
+
+        val hide = Button("―")
+        hide.styleClass.add("hide")
+        hide.setPrefSize(60.0, 30.0)
+        hide.setMinSize(60.0, 30.0)
+        hide.setMaxSize(60.0, 30.0)
+        hide.translateX = -68.0
+        hide.setOnMouseClicked {
+            ManagementYaar.hide()
+        }
+        g1.right = leftBar
+        g1.left = hide
+        g1.translateX = -50.0
+
+        g.left = bar
+        g.right = g1
         bar.isUseSystemMenuBar = true
-//        bar.menus.add(ico)
+        bar.menus.add(ico)
         bar.menus.add(file)
         bar.menus.add(edit)
         bar.menus.add(view)
         bar.menus.add(help)
+        bar.setMinSize(1200.0, 30.0)
+        bar.setPrefSize(1200.0, 30.0)
+        bar.setMaxSize(1200.0, 30.0)
         if (developer != null) bar.menus.add(developer)
-        root.top = bar
+        root.top = g
         stage.scene = scene
         stage.show()
     }

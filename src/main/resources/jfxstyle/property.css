@@ -1,20 +1,22 @@
 .undone {
-    -fx-background-color: white;
+    -fx-text-fill: #660033;
+    -fx-border-color: #660033;
 }
 .done {
-    -fx-background-color: #70ffa7;
+    -fx-text-fill: #006633;
+    -fx-border-color: #006633;
 }
 .marked-done {
-    -fx-background-color: #4fb375;
+    -fx-text-fill: #4fb375;
 }
 .marked-undone {
-    -fx-background-color: #6584b5;
+    -fx-text-fill: #6584b5;
+    -fx-border-color: #6584b5;
 }
 .parent {
-    -fx-border-color: #baa3ff;
     -fx-border-width: 2px;
-    -fx-border-radius: 10 10 10 10;
-    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
 }
 .parent:hover {
     -fx-text-fill: white;
@@ -24,6 +26,8 @@
     -fx-background-color: #baa3ff;
     -fx-border-color: darkgray;
     -fx-border-width: 2px;
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
 }
 .no-properties {
     -fx-text-fill: #bababa;
